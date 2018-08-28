@@ -1,7 +1,5 @@
 package fantasyBot;
 
-import javax.swing.text.PlainDocument;
-
 import fantasyBot.model.Character;
 import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
 import net.dv8tion.jda.core.entities.PrivateChannel;
@@ -10,7 +8,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-public class EventListener extends ListenerAdapter {
+public class EventListener extends ListenerAdapter{
 
 	public static final char PREFIX = '>';
 
@@ -31,7 +29,6 @@ public class EventListener extends ListenerAdapter {
 			} catch(InsufficientPermissionException exception) {
 				System.err.println("The message can't be removed.");
 			}
-			
 			
 			PrivateChannel priv = author.openPrivateChannel().complete();
 			

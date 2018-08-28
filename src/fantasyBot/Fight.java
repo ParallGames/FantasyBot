@@ -1,6 +1,7 @@
 package fantasyBot;
 
 import fantasyBot.model.Character;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 
 public class Fight {
@@ -8,11 +9,22 @@ public class Fight {
 	private Character player;
 	private Character ia;
 	private PrivateChannel channel;
-	
+
 	public void runFight(Character player, Character ia, PrivateChannel channel) {
+
+		channel.sendMessage("Vous avez commencé un duel !\n"
+				+ "----------------------------\n"+
+				player.getName() + " contre " + ia.getName() + " !").complete();
+
+		channel.sendMessage("C'est à " + player.getName() + " de commencer !\n"
+				+ "Quelle attaque souhaité vous effectuer ?\n" 
+				+ "------------------------------------------\n" 
+				+ "1. Attaque basique !").submit();
 		
+		Message message = channel.getMessageById(channel.getLatestMessageId()).complete();
 		
-		
+		//message.addReaction("U+0030").complete(); Not Working
+
 	}
 
 	public Character getPlayer() {
@@ -38,5 +50,5 @@ public class Fight {
 	public void setChannel(PrivateChannel channel) {
 		this.channel = channel;
 	}
-	
+
 }
