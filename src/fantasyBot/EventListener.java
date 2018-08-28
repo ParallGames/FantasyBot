@@ -1,5 +1,8 @@
 package fantasyBot;
 
+import javax.swing.text.PlainDocument;
+
+import fantasyBot.model.Character;
 import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -31,7 +34,17 @@ public class EventListener extends ListenerAdapter {
 			
 			
 			PrivateChannel priv = author.openPrivateChannel().complete();
-			priv.sendMessage("Bonjour, le bot n'est pas prêt à jouer pour le moment").complete();
+			
+			Fight fight = new Fight();
+			
+			int attack = 3;
+			int health = 10;
+						
+			Character player = new Character(author.getName(), attack, health);
+			
+			Character ia = new Character("Gros monstre a grou grou", 2, 5);
+			
+			fight.runFight(player, ia, priv);
 		}
 
 		System.out.println(message);
