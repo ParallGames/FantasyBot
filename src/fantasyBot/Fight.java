@@ -9,8 +9,7 @@ public class Fight {
 	private Character player;
 	private Character ia;
 	private PrivateChannel channel;
-	private
-
+	
 	public void runFight(Character player, Character ia, PrivateChannel channel) {
 		
 		this.player = player;
@@ -20,21 +19,44 @@ public class Fight {
 		channel.sendMessage("Vous avez commencé un duel !\n"
 				+ "----------------------------\n"+
 				player.getName() + " contre " + ia.getName() + " !").complete();
+		
+		choosingPhase();
+		
+		//Message message = channel.getMessageById(channel.getLatestMessageId()).complete();
+		
+		//message.addReaction("U+0030").complete(); Not Working
+	}
+	
+	public void fightResponse(String attackChoice) {
+		 
+		int capacityNbr = Integer.parseInt(attackChoice);
+		
+		//TODO: Does damage with capacity
+		
+		ia.setActualHealthPoints(ia.getActualHealthPoints() - player.getAttackPoints());
+		
+		channel.sendMessage("Vous avez infligé " + player.getAttackPoints() + " à " + ia.getName() + " ! "
+				+ "Il lui reste " + ia.getActualHealthPoints() + " sur " + ia.getMaxHealthPoints() + " !").complete();
+		
+		
+		player.setActualHealthPoints(player.getActualHealthPoints() - ia.getAttackPoints());
+		
+		channel.sendMessage(ia.getName() + " vous a infligé " + ia.getAttackPoints() + " ! "
+				+ "Il vous reste " + player.getActualHealthPoints() + " sur " + player.getMaxHealthPoints() + " !").complete();
+		
+		choosingPhase();
+	}
+	
+	private void choosingPhase() {
 
-		channel.sendMessage("C'est à " + player.getName() + " de commencer !\n"
+		channel.sendMessage("C'est à " + player.getName() + " de jouer !\n"
+				+ "Votre ennemie possède " + ia.getActualHealthPoints() + " points de vie sur " + ia.getMaxHealthPoints() + ".\n"
 				+ "Quelle attaque souhaitez-vous effectuer ?\n" 
 				+ "------------------------------------------\n" 
 				+ "1. Attaque basique.").submit();
-		
-		Message message = channel.getMessageById(channel.getLatestMessageId()).complete();
-		
-		//message.addReaction("U+0030").complete(); Not Working
-
 	}
 	
-	public void fightResponse() {
-		 
-	}
+	
 
 	public Character getPlayer() {
 		return player;

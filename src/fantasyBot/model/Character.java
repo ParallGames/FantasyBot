@@ -4,12 +4,14 @@ public class Character {
 	
 	private String name;
 	private int attackPoints;
-	private int healthPoints;
+	private int maxHealthPoints;
+	private int actualHealthPoints;
 	
 	public Character(String name, int attackPoints, int healthPoints) {
 		this.name = name;
 		this.attackPoints = attackPoints;
-		this.healthPoints = healthPoints;
+		this.maxHealthPoints = healthPoints;
+		actualHealthPoints = maxHealthPoints;
 	}
 
 	public String getName() {
@@ -28,11 +30,19 @@ public class Character {
 		this.attackPoints = attackPoints;
 	}
 
-	public int getHealthPoints() {
-		return healthPoints;
+	public int getMaxHealthPoints() {
+		return maxHealthPoints;
 	}
 
-	public void setHealthPoints(int healthPoints) {
-		this.healthPoints = healthPoints;
+	public void setMaxHealthPoints(int healthPoints) {
+		this.maxHealthPoints = healthPoints;
+	}
+
+	public int getActualHealthPoints() {
+		return actualHealthPoints;
+	}
+
+	public void setActualHealthPoints(int actualHealthPoints) {
+		this.actualHealthPoints = actualHealthPoints;
 	}
 }
