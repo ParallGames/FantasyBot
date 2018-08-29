@@ -1,5 +1,7 @@
 package fantasyBot;
 
+import java.util.ArrayList;
+
 import fantasyBot.model.Character;
 import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
 import net.dv8tion.jda.core.entities.PrivateChannel;
@@ -11,6 +13,8 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class EventListener extends ListenerAdapter{
 
 	public static final char PREFIX = '>';
+	
+	private static ArrayList<Fight> fightInProgresse = new ArrayList<>();
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
@@ -30,18 +34,36 @@ public class EventListener extends ListenerAdapter{
 				System.err.println("The message can't be removed.");
 			}
 			
-			PrivateChannel priv = author.openPrivateChannel().complete();
+			boolean messageSenderAsAlreadyAFight = false;
+			int fightId = 0;
 			
-			Fight fight = new Fight();
+			for(int i = 0; i < fightInProgresse.size(); i++) {
+				if(fightInProgresse.get(i).getPlayer().getName().equals(author.getName())) {
+					messageSenderAsAlreadyAFight = true;
+					fightId = i;
+				}
+			}
 			
-			int attack = 3;
-			int health = 10;
-						
-			Character player = new Character(author.getName(), attack, health);
-			
-			Character ia = new Character("Gros monstre a grou grou", 2, 5);
-			
-			fight.runFight(player, ia, priv);
+			if(messageSenderAsAlreadyAFight) {
+				Fight fight = fightInProgresse.get(fightId);
+				
+				fight.getChannel().sendMessage("Vous avez déjà un combats en cours !");
+			} else {
+				PrivateChannel priv = author.openPrivateChannel().complete();
+				
+				Fight fight = new Fight();
+				
+				int attack = 3;
+				int health = 10;
+							
+				Character player = new Character(author.getName(), attack, health);
+				
+				Character ia = new Character("Gros monstre a grou grou", 2, 5);
+				
+				fight.runFight(player, ia, priv);
+				
+				fightInProgresse.add(fight);
+			}
 		}
 
 		System.out.println(message);

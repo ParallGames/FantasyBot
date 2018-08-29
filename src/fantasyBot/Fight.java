@@ -9,22 +9,31 @@ public class Fight {
 	private Character player;
 	private Character ia;
 	private PrivateChannel channel;
+	private
 
 	public void runFight(Character player, Character ia, PrivateChannel channel) {
+		
+		this.player = player;
+		this.ia = ia;
+		this.channel = channel;
 
 		channel.sendMessage("Vous avez commencé un duel !\n"
 				+ "----------------------------\n"+
 				player.getName() + " contre " + ia.getName() + " !").complete();
 
 		channel.sendMessage("C'est à " + player.getName() + " de commencer !\n"
-				+ "Quelle attaque souhaité vous effectuer ?\n" 
+				+ "Quelle attaque souhaitez-vous effectuer ?\n" 
 				+ "------------------------------------------\n" 
-				+ "1. Attaque basique !").submit();
+				+ "1. Attaque basique.").submit();
 		
 		Message message = channel.getMessageById(channel.getLatestMessageId()).complete();
 		
 		//message.addReaction("U+0030").complete(); Not Working
 
+	}
+	
+	public void fightResponse() {
+		 
 	}
 
 	public Character getPlayer() {
