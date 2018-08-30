@@ -100,4 +100,12 @@ public class EventListener extends ListenerAdapter{
 		event.getFriendRequest().accept().complete();
 		System.out.println(event.getFriendRequest().getUser().getName());
 	}
+
+	public static ArrayList<Fight> getFightInProgresse() {
+		return fightInProgresse;
+	}
+
+	public static void setFightInProgresse(ArrayList<Fight> fightInProgresse) {
+		EventListener.fightInProgresse = fightInProgresse;
+	}
 }
