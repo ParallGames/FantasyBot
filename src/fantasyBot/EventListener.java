@@ -13,8 +13,6 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class EventListener extends ListenerAdapter{
 
 	public static final char PREFIX = '>';
-	
-	public static final String PREFIX_ATTACK = "=>";
 
 	private static ArrayList<Fight> fightInProgresse = new ArrayList<>();
 
@@ -26,24 +24,24 @@ public class EventListener extends ListenerAdapter{
 		for(int i = 0; i < fightInProgresse.size(); i++) {
 			if(fightInProgresse.get(i).getPlayer().getName().equals(author.getName())) {
 
-				String formateString = message;
+				boolean attackIsCorrect = false;
 
-				if(formateString.substring(0, 2).equals(PREFIX_ATTACK)) {
-					
-					boolean attackIsCorrect = false;
-					
+				try {
 					for(int j = 1; j < 5; j++) {
-						if(message.substring(2, 3).equals(Integer.toString(j))) {
+						if(Integer.parseInt(message) == j) {
 							attackIsCorrect = true;
 						}
 					}
-					
-					if (attackIsCorrect) {
-						fightInProgresse.get(i).fightResponse(message.substring(2, 3));
-					}else {
-						fightInProgresse.get(i).getChannel().sendMessage("L'attaque est invalide !");
-					}
+				} catch (NumberFormatException e) {
+					fightInProgresse.get(i).getChannel().sendMessage("L'attaque est invalide !");
 				}
+
+				if (attackIsCorrect) {
+					fightInProgresse.get(i).fightResponse();
+				}
+				
+				return;
+
 			}
 		}
 

@@ -26,9 +26,7 @@ public class Fight {
 		//message.addReaction("U+0030").complete(); Not Working
 	}
 
-	public void fightResponse(String attackChoice) {
-
-		int capacityNbr = Integer.parseInt(attackChoice);
+	public void fightResponse() {
 
 		//TODO: Does damage with capacity
 
