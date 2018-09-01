@@ -58,12 +58,24 @@ public class Fight {
 		if (player2.isDead()) {
 			player1Win();
 			return;
-		} else if (player1 instanceof Player) {
-			((Player) player1).getPrivateChannel()
-					.sendMessage("Vous avez infligé " + player1.getAttackDamages() + " à " + player2.getName() + " ! "
-							+ "Il lui reste " + player2.getHP() + " sur " + player2.getMaxHealthPoints() + " !")
-					.complete();
+		} else {
+			if (player1 instanceof Player) {
+				((Player) player1).getPrivateChannel()
+						.sendMessage("Vous avez infligé " + player1.getAttackDamages() + " à " + player2.getName()
+								+ " ! " + "Il lui reste " + player2.getHP() + " sur " + player2.getMaxHealthPoints()
+								+ " !")
+						.complete();
+			}
+
+			if (player2 instanceof Player) {
+				((Player) player2).getPrivateChannel()
+						.sendMessage(player1.getName() + " vous a infligé " + player1.getAttackDamages()
+								+ " ! Il vous reste " + player2.getHP() + " sur " + player2.getMaxHealthPoints()
+								+ " ! ")
+						.complete();
+			}
 		}
+
 		player2Choice();
 	}
 
@@ -72,11 +84,22 @@ public class Fight {
 		if (player1.isDead()) {
 			player2Win();
 			return;
-		} else if (player2 instanceof Player) {
-			((Player) player2).getPrivateChannel()
-					.sendMessage("Vous avez infligé " + player2.getAttackDamages() + " à " + player1.getName() + " ! "
-							+ "Il lui reste " + player1.getHP() + " sur " + player1.getMaxHealthPoints() + " !")
-					.complete();
+		} else {
+			if (player2 instanceof Player) {
+				((Player) player2).getPrivateChannel()
+						.sendMessage("Vous avez infligé " + player2.getAttackDamages() + " à " + player1.getName()
+								+ " ! " + "Il lui reste " + player1.getHP() + " sur " + player1.getMaxHealthPoints()
+								+ " !")
+						.complete();
+			}
+
+			if (player1 instanceof Player) {
+				((Player) player1).getPrivateChannel()
+						.sendMessage(player2.getName() + " vous a infligé " + player2.getAttackDamages()
+								+ " ! Il vous reste " + player1.getHP() + " sur " + player1.getMaxHealthPoints()
+								+ " ! ")
+						.complete();
+			}
 		}
 		player1Choice();
 	}
@@ -92,6 +115,16 @@ public class Fight {
 					((Player) player1).getPrivateChannel());
 		}
 
+		if (player2 instanceof Player) {
+			((Player) player2)
+					.getPrivateChannel().sendMessage(player1.getName()
+							+ " vous inflige une attaque létale. Vous perdez.\nVous remportez " + 5 + " d'exp !")
+					.complete();
+
+			Globals.getPlayerByID(((Player) player2).getPlayerID()).getExperience().addExperience(5,
+					((Player) player2).getPrivateChannel());
+		}
+
 		Globals.getFightsInProgress().remove(this);
 	}
 
@@ -104,6 +137,16 @@ public class Fight {
 
 			Globals.getPlayerByID(((Player) player2).getPlayerID()).getExperience().addExperience(20,
 					((Player) player2).getPrivateChannel());
+		}
+
+		if (player1 instanceof Player) {
+			((Player) player1)
+					.getPrivateChannel().sendMessage(player2.getName()
+							+ " vous inflige une attaque létale. Vous perdez.\nVous remportez " + 5 + " d'exp !")
+					.complete();
+
+			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(5,
+					((Player) player1).getPrivateChannel());
 		}
 
 		Globals.getFightsInProgress().remove(this);

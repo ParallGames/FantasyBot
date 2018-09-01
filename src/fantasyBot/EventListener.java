@@ -4,7 +4,6 @@ import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.character.ennemies.Spider;
 import fantasyBot.player.PlayerStats;
-import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -56,7 +55,6 @@ public class EventListener extends ListenerAdapter {
 					return;
 				}
 			}
-
 		}
 
 		if (message.charAt(0) != PREFIX) {
@@ -65,7 +63,7 @@ public class EventListener extends ListenerAdapter {
 
 		message = message.substring(1);
 
-		if (message.equalsIgnoreCase("play")) {
+		if (message.substring(0, 4).equalsIgnoreCase("play")) {
 			try {
 				event.getMessage().delete().complete();
 			} catch (Exception e) {
@@ -101,7 +99,36 @@ public class EventListener extends ListenerAdapter {
 				}
 
 				Character player = new Player(playerStats);
-				Character ennemy = new Spider();
+
+				User ennemyPlayer = null;
+
+				try {
+					ennemyPlayer = Main.getJda().getUserById(message.substring(5));
+				} catch (Exception e) {
+				}
+
+				Character ennemy;
+
+				if (ennemyPlayer == null) {
+					ennemy = new Spider();
+				} else {
+					PlayerStats player2Stats = null;
+
+					for (PlayerStats stats : Globals.getPlayers()) {
+						if (stats.getPlayerID() == ennemyPlayer.getIdLong()) {
+							player2Stats = stats;
+							break;
+						}
+					}
+
+					// If the player is new add him in the list
+					if (player2Stats == null) {
+						player2Stats = new PlayerStats(ennemyPlayer);
+						Globals.getPlayers().add(player2Stats);
+					}
+
+					ennemy = new Player(player2Stats);
+				}
 
 				fight.runFight(player, ennemy);
 
@@ -111,10 +138,5 @@ public class EventListener extends ListenerAdapter {
 
 		System.out.println(message);
 		System.out.println(author.getName());
-	}
-
-	public void onFriendRequestReceived(FriendRequestReceivedEvent event) {
-		event.getFriendRequest().accept().complete();
-		System.out.println(event.getFriendRequest().getUser().getName());
 	}
 }
