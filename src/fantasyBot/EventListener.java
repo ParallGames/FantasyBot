@@ -82,11 +82,11 @@ public class EventListener extends ListenerAdapter {
 				int attack = 2;
 				int health = 10;
 
-				Player player = new Player(author.getName(), attack, health);
+				Character player = new Player(author.getName(), attack, health);
 
 				Character ennemy = new Spider();
 
-				fight.runFight(player, (Player) ennemy, priv);
+				fight.runFight(player, ennemy, priv);
 
 				fightInProgresse.add(fight);
 			}

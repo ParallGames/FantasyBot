@@ -6,11 +6,11 @@ import net.dv8tion.jda.core.entities.PrivateChannel;
 
 public class Fight {
 
-	private Player player1;
-	private Player player2;
+	private Character player1;
+	private Character player2;
 	private PrivateChannel channel;
 
-	public void runFight(Player player1, Player player2, PrivateChannel channel) {
+	public void runFight(Character player1, Character player2, PrivateChannel channel) {
 
 		this.player1 = player1;
 		this.player2 = player2;
@@ -65,8 +65,12 @@ public class Fight {
 		channel.sendMessage("Vous avez infligé " + player1.getAttackDamages() + " à " + player2.getName()
 				+ " ! Il meurt sur ce coup !\n"
 				+ "Félicitation ! Vous remportez " + 5 + "d'exp !").complete();
+
 		
-		player1.getExperience().addExperience(5, channel);
+		//TODO Verify class before castring
+		
+		
+		((Player)player1).getExperience().addExperience(5, channel);
 		
 		EventListener.getFightInProgresse().remove(this);
 
