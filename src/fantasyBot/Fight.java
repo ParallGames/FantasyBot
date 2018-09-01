@@ -71,10 +71,10 @@ public class Fight {
 
 	private void endFight() {
 		channel.sendMessage("Vous avez infligé " + player1.getAttackDamages() + " à " + player2.getName()
-				+ " ! Il meurt sur ce coup !\n" + "Félicitation ! Vous remportez " + 5 + "d'exp !").complete();
+				+ " ! Il meurt sur ce coup !\n" + "Félicitation ! Vous remportez " + 20 + " d'exp !").complete();
 
 		if (player1 instanceof Player) {
-			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(5, channel);
+			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(20, channel);
 		}
 
 		Globals.getFightsInProgress().remove(this);

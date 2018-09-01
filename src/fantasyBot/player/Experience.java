@@ -26,7 +26,7 @@ public class Experience {
 		level++;
 		levelPointsMax = calculateLevelPointsMax(level);
 
-		privateChannel.sendMessage("Félicitation ! Vous êtes passé niveau " + level + " !");
+		privateChannel.sendMessage("Félicitation ! Vous êtes passé niveau " + level + " !").complete();
 	}
 
 	public int calculateLevelPointsMax(int level) {
