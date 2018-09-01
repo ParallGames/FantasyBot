@@ -1,18 +1,27 @@
 package fantasyBot.character;
 
+import fantasyBot.Main;
+import fantasyBot.player.PlayerStats;
+import net.dv8tion.jda.core.entities.PrivateChannel;
+
 public class Player extends Character {
 
 	private String name;
 	private int attackDamage;
 	private int maxHealthPoints;
-	private Experience experience;
 
-	public Player(String name, int attackDamage, int maxHealthPoints) {
-		this.name = name;
-		this.attackDamage = attackDamage;
-		this.maxHealthPoints = maxHealthPoints;
-		this.hp = maxHealthPoints;
-		experience = new Experience(1, 0);
+	private PrivateChannel channel;
+	private long playerID;
+
+	public Player(PlayerStats stats) {
+		this.name = stats.getName();
+		this.attackDamage = stats.getAttackDamage();
+
+		this.maxHealthPoints = stats.getMaxHP();
+		this.hp = stats.getMaxHP();
+
+		this.channel = Main.getJda().getUserById(stats.getPlayerID()).openPrivateChannel().complete();
+		this.playerID = stats.getPlayerID();
 	}
 
 	@Override
@@ -30,11 +39,11 @@ public class Player extends Character {
 		return maxHealthPoints;
 	}
 
-	public Experience getExperience() {
-		return experience;
+	public PrivateChannel getPrivateChannel() {
+		return channel;
 	}
 
-	public void setExperience(Experience experience) {
-		this.experience = experience;
+	public long getPlayerID() {
+		return playerID;
 	}
 }

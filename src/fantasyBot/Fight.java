@@ -27,6 +27,14 @@ public class Fight {
 		// message.addReaction("U+0030").complete(); Not Working
 	}
 
+	public void player1Turn() {
+
+	}
+
+	public void player2Turn() {
+
+	}
+
 	public void fightResponse() {
 
 		// TODO: Does damage with capacity
@@ -63,16 +71,13 @@ public class Fight {
 
 	private void endFight() {
 		channel.sendMessage("Vous avez infligé " + player1.getAttackDamages() + " à " + player2.getName()
-				+ " ! Il meurt sur ce coup !\n"
-				+ "Félicitation ! Vous remportez " + 5 + "d'exp !").complete();
+				+ " ! Il meurt sur ce coup !\n" + "Félicitation ! Vous remportez " + 5 + "d'exp !").complete();
 
-		
-		//TODO Verify class before castring
-		
-		
-		((Player)player1).getExperience().addExperience(5, channel);
-		
-		EventListener.getFightInProgresse().remove(this);
+		if (player1 instanceof Player) {
+			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(5, channel);
+		}
+
+		Globals.getFightsInProgress().remove(this);
 
 	}
 
@@ -80,7 +85,7 @@ public class Fight {
 		return player1;
 	}
 
-	public Character getIa() {
+	public Character getEnnemy() {
 		return player2;
 	}
 

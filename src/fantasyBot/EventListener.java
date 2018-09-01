@@ -1,10 +1,9 @@
 package fantasyBot;
 
-import java.util.ArrayList;
-
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.character.ennemies.Spider;
+import fantasyBot.player.PlayerStats;
 import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -16,15 +15,13 @@ public class EventListener extends ListenerAdapter {
 
 	public static final char PREFIX = '>';
 
-	private static ArrayList<Fight> fightInProgresse = new ArrayList<>();
-
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		String message = event.getMessage().getContentRaw();
 		User author = event.getAuthor();
 
-		for (int i = 0; i < fightInProgresse.size(); i++) {
-			if (fightInProgresse.get(i).getPlayer().getName().equals(author.getName())) {
+		for (Fight fight : Globals.getFightsInProgress()) {
+			if (fight.getPlayer().getName().equals(author.getName())) {
 
 				boolean attackIsCorrect = false;
 
@@ -35,11 +32,11 @@ public class EventListener extends ListenerAdapter {
 						}
 					}
 				} catch (NumberFormatException e) {
-					fightInProgresse.get(i).getChannel().sendMessage("L'attaque est invalide !");
+					fight.getChannel().sendMessage("L'attaque est invalide !");
 				}
 
 				if (attackIsCorrect) {
-					fightInProgresse.get(i).fightResponse();
+					fight.fightResponse();
 				}
 
 				return;
@@ -63,15 +60,15 @@ public class EventListener extends ListenerAdapter {
 			boolean messageSenderAsAlreadyAFight = false;
 			int fightId = 0;
 
-			for (int i = 0; i < fightInProgresse.size(); i++) {
-				if (fightInProgresse.get(i).getPlayer().getName().equals(author.getName())) {
+			for (int i = 0; i < Globals.getFightsInProgress().size(); i++) {
+				if (Globals.getFightsInProgress().get(i).getPlayer().getName().equals(author.getName())) {
 					messageSenderAsAlreadyAFight = true;
 					fightId = i;
 				}
 			}
 
 			if (messageSenderAsAlreadyAFight) {
-				Fight fight = fightInProgresse.get(fightId);
+				Fight fight = Globals.getFightsInProgress().get(fightId);
 
 				fight.getChannel().sendMessage("Vous avez déjà un combats en cours !");
 			} else {
@@ -79,16 +76,28 @@ public class EventListener extends ListenerAdapter {
 
 				Fight fight = new Fight();
 
-				int attack = 2;
-				int health = 10;
+				PlayerStats playerStats = null;
 
-				Character player = new Player(author.getName(), attack, health);
+				for (PlayerStats stats : Globals.getPlayers()) {
+					if (stats.getPlayerID() == author.getIdLong()) {
+						playerStats = stats;
+						break;
+					}
+				}
+
+				// If the player is new add him in the list
+				if (playerStats == null) {
+					playerStats = new PlayerStats(author);
+					Globals.getPlayers().add(playerStats);
+				}
+
+				Character player = new Player(playerStats);
 
 				Character ennemy = new Spider();
 
 				fight.runFight(player, ennemy, priv);
 
-				fightInProgresse.add(fight);
+				Globals.getFightsInProgress().add(fight);
 			}
 		}
 
@@ -99,13 +108,5 @@ public class EventListener extends ListenerAdapter {
 	public void onFriendRequestReceived(FriendRequestReceivedEvent event) {
 		event.getFriendRequest().accept().complete();
 		System.out.println(event.getFriendRequest().getUser().getName());
-	}
-
-	public static ArrayList<Fight> getFightInProgresse() {
-		return fightInProgresse;
-	}
-
-	public static void setFightInProgresse(ArrayList<Fight> fightInProgresse) {
-		EventListener.fightInProgresse = fightInProgresse;
 	}
 }
