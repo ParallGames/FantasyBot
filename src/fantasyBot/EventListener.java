@@ -21,7 +21,7 @@ public class EventListener extends ListenerAdapter {
 		User author = event.getAuthor();
 
 		for (Fight fight : Globals.getFightsInProgress()) {
-			if (fight.getPlayer().getName().equals(author.getName())) {
+			if (fight.getPlayer().getName().equals(author.getName()) && event.getPrivateChannel() != null) {
 
 				boolean attackIsCorrect = false;
 
