@@ -5,10 +5,8 @@ import fantasyBot.character.Player;
 import fantasyBot.character.ennemies.Spider;
 import fantasyBot.player.PlayerStats;
 import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
-import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class EventListener extends ListenerAdapter {
@@ -21,27 +19,44 @@ public class EventListener extends ListenerAdapter {
 		User author = event.getAuthor();
 
 		for (Fight fight : Globals.getFightsInProgress()) {
-			if (fight.getPlayer().getName().equals(author.getName()) && event.getPrivateChannel() != null) {
+			if (event.getPrivateChannel() != null) {
+				if (fight.getPlayer().getName().equals(author.getName())) {
+					boolean attackIsCorrect = false;
 
-				boolean attackIsCorrect = false;
-
-				try {
-					for (int j = 1; j < 5; j++) {
-						if (Integer.parseInt(message) == j) {
-							attackIsCorrect = true;
+					try {
+						for (int j = 1; j < 5; j++) {
+							if (Integer.parseInt(message) == j) {
+								attackIsCorrect = true;
+							}
 						}
+					} catch (NumberFormatException e) {
+						author.openPrivateChannel().complete().sendMessage("L'attaque est invalide !").complete();
 					}
-				} catch (NumberFormatException e) {
-					fight.getChannel().sendMessage("L'attaque est invalide !");
+
+					if (attackIsCorrect) {
+						fight.player1Turn();
+					}
+					return;
+				} else if (fight.getEnnemy().getName().equals(author.getName())) {
+					boolean attackIsCorrect = false;
+
+					try {
+						for (int j = 1; j < 5; j++) {
+							if (Integer.parseInt(message) == j) {
+								attackIsCorrect = true;
+							}
+						}
+					} catch (NumberFormatException e) {
+						author.openPrivateChannel().complete().sendMessage("L'attaque est invalide !").complete();
+					}
+
+					if (attackIsCorrect) {
+						fight.player2Turn();
+					}
+					return;
 				}
-
-				if (attackIsCorrect) {
-					fight.fightResponse();
-				}
-
-				return;
-
 			}
+
 		}
 
 		if (message.charAt(0) != PREFIX) {
@@ -53,27 +68,21 @@ public class EventListener extends ListenerAdapter {
 		if (message.equalsIgnoreCase("play")) {
 			try {
 				event.getMessage().delete().complete();
-			} catch (InsufficientPermissionException exception) {
+			} catch (Exception e) {
 				System.err.println("The message can't be removed.");
 			}
 
 			boolean messageSenderAsAlreadyAFight = false;
-			int fightId = 0;
 
 			for (int i = 0; i < Globals.getFightsInProgress().size(); i++) {
 				if (Globals.getFightsInProgress().get(i).getPlayer().getName().equals(author.getName())) {
 					messageSenderAsAlreadyAFight = true;
-					fightId = i;
 				}
 			}
 
 			if (messageSenderAsAlreadyAFight) {
-				Fight fight = Globals.getFightsInProgress().get(fightId);
-
-				fight.getChannel().sendMessage("Vous avez déjà un combats en cours !");
+				author.openPrivateChannel().complete().sendMessage("Vous avez déjà un combats en cours !").complete();
 			} else {
-				PrivateChannel priv = author.openPrivateChannel().complete();
-
 				Fight fight = new Fight();
 
 				PlayerStats playerStats = null;
@@ -92,10 +101,9 @@ public class EventListener extends ListenerAdapter {
 				}
 
 				Character player = new Player(playerStats);
-
 				Character ennemy = new Spider();
 
-				fight.runFight(player, ennemy, priv);
+				fight.runFight(player, ennemy);
 
 				Globals.getFightsInProgress().add(fight);
 			}
