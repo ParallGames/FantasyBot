@@ -33,7 +33,11 @@ public class EventListener extends ListenerAdapter {
 					}
 
 					if (attackIsCorrect) {
-						fight.player1Turn();
+						if(fight.isTurnOfPlayer1()) {
+							fight.player1Turn();
+						}else {
+							author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
+						}
 					}
 					return;
 				} else if (fight.getEnnemy().getName().equals(author.getName())) {
@@ -50,7 +54,11 @@ public class EventListener extends ListenerAdapter {
 					}
 
 					if (attackIsCorrect) {
-						fight.player2Turn();
+						if(!fight.isTurnOfPlayer1()) {
+							fight.player2Turn();
+						} else {
+							author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
+						}
 					}
 					return;
 				}
