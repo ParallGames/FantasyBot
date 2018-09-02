@@ -103,7 +103,12 @@ public class EventListener extends ListenerAdapter {
 				User ennemyPlayer = null;
 
 				try {
-					ennemyPlayer = Main.getJda().getUserById(message.substring(5));
+					if(message.substring(5).equalsIgnoreCase(author.getId())) {
+						author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas vous affronter vous-même !").complete();
+						return;
+					} else {
+						ennemyPlayer = Main.getJda().getUserById(message.substring(5));
+					}
 				} catch (Exception e) {
 				}
 
