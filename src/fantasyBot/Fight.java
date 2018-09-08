@@ -7,6 +7,7 @@ public class Fight {
 
 	private Character player1;
 	private Character player2;
+	private boolean turnOfPlayer1;
 
 	public void runFight(Character player1, Character player2) {
 		this.player1 = player1;
@@ -24,6 +25,7 @@ public class Fight {
 					.complete();
 		}
 
+		turnOfPlayer1 = true;
 		player1Choice();
 	}
 
@@ -76,6 +78,7 @@ public class Fight {
 			}
 		}
 
+		turnOfPlayer1 = false;
 		player2Choice();
 	}
 
@@ -101,6 +104,7 @@ public class Fight {
 						.complete();
 			}
 		}
+		turnOfPlayer1 = true;
 		player1Choice();
 	}
 
@@ -158,5 +162,9 @@ public class Fight {
 
 	public Character getEnnemy() {
 		return player2;
+	}
+
+	public boolean isTurnOfPlayer1() {
+		return turnOfPlayer1;
 	}
 }
