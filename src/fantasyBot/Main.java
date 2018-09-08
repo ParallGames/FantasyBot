@@ -21,6 +21,8 @@ public class Main {
 			return;
 		}
 
+		Globals.loadPlayers();
+
 		jda.addEventListener(new EventListener());
 		jda.getTextChannelsByName("log-bot", true).get(0).sendMessage("Bonjour !").complete();
 
@@ -31,6 +33,8 @@ public class Main {
 			text = sc.next();
 		}
 		sc.close();
+
+		Globals.savePlayers();
 
 		jda.getTextChannelsByName("log-bot", true).get(0).sendMessage("Au revoir !").complete();
 
