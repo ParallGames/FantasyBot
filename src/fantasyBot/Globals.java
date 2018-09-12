@@ -1,27 +1,25 @@
 package fantasyBot;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import fantasyBot.player.Ability;
 import fantasyBot.player.PlayerStats;
 
 public class Globals {
 	private static final String SAVE_PATH = System.getProperty("user.home") + "/.fantasyBot";
 
+	private static final String ABILITY_PATH = "ressources/Abilitys.txt";
+
 	private static final ArrayList<Fight> fightsInProgress = new ArrayList<Fight>();
 
 	private static final ArrayList<PlayerStats> players = new ArrayList<PlayerStats>();
 
-	public static ArrayList<Fight> getFightsInProgress() {
-		return fightsInProgress;
-	}
-
-	public static ArrayList<PlayerStats> getPlayers() {
-		return players;
-	}
+	private static final ArrayList<Ability> abilitys = new ArrayList<Ability>();
 
 	/**
-	 * 
 	 * @param id the discord id of the player
 	 * @return the player with this id or null if he is not found
 	 */
@@ -50,5 +48,47 @@ public class Globals {
 		for (PlayerStats player : players) {
 			player.save(SAVE_PATH);
 		}
+	}
+
+	public static void loadAbilitys() throws FileNotFoundException {
+		File file = new File(ABILITY_PATH);
+
+		Scanner scanner = new Scanner(file);
+
+		try {
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+
+				if(!line.equals("")) {
+					if(!line.substring(0, 2).equals("//")) {
+						String name = line.split(":")[1];
+						int damage = Integer.parseInt(scanner.nextLine().split(":")[1]);
+						int energyCost = Integer.parseInt(scanner.nextLine().split(":")[1]);
+						String abilityDescription = scanner.nextLine().split(":")[1];
+						String abilityAttackDescription = scanner.nextLine().split(":")[1];
+
+						Ability newAbility = new Ability(name, damage, energyCost, abilityDescription, abilityAttackDescription);
+						abilitys.add(newAbility);
+						
+						System.out.println("Capacité " + newAbility.getName() + " chargé");
+					}
+				}
+
+			}
+		}finally {
+			scanner.close();
+		}
+	}
+	
+	public static ArrayList<Fight> getFightsInProgress() {
+		return fightsInProgress;
+	}
+
+	public static ArrayList<PlayerStats> getPlayers() {
+		return players;
+	}
+
+	public static ArrayList<Ability> getAbilitys() {
+		return abilitys;
 	}
 }

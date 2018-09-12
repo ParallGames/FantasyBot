@@ -13,7 +13,6 @@ public class Spider extends Character {
 		return "Spider";
 	}
 
-	@Override
 	public int getAttackDamages() {
 		return 1;
 	}

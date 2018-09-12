@@ -6,8 +6,6 @@ public abstract class Character {
 
 	public abstract String getName();
 
-	public abstract int getAttackDamages();
-
 	public abstract int getMaxHealthPoints();
 
 	public int getHP() {

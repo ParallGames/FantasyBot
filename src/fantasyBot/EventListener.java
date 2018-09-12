@@ -34,7 +34,7 @@ public class EventListener extends ListenerAdapter {
 
 					if (attackIsCorrect) {
 						if(fight.isTurnOfPlayer1()) {
-							fight.player1Turn();
+							fight.player1Turn(Integer.parseInt(message));
 						}else {
 							author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
 						}
@@ -55,7 +55,7 @@ public class EventListener extends ListenerAdapter {
 
 					if (attackIsCorrect) {
 						if(!fight.isTurnOfPlayer1()) {
-							fight.player2Turn();
+							fight.player2Turn(Integer.parseInt(message));
 						} else {
 							author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
 						}

@@ -1,0 +1,23 @@
+//		  ABILITYS-FORMAT
+//------------------------------
+//Format :
+//name:AbilityName
+//damage:intValue
+//energy-cost:intValue
+//description:detailledDescription
+//attack-description:textWhenTheAbilityIsUsed
+//
+//		 ABILITYS-LIST
+//-----------------------------
+
+name:Attaque de base
+damage:1
+energy-cost:0
+description:Vous effectuez une attaque de base contre votre ennemie a l'aide de vos poings
+attack-description:(ATTACKER_PLAYER_NAME) attaque (ATTAQUED_PLAYER_NAME) grâce à ses poings !
+
+name:Boule de feu
+damage:3
+energy-cost:10
+description:Vous lancez une boule de feu sur votre adversaire. A 30% de chance d'infliger l'effet Brûlure
+attack-description:(ATTACKER_PLAYER_NAME) concentre une boule de feu dans la paume de ces mains ! Il l'a lance ! (ATTAQUED_PLAYER_NAME) la reçoit de pleins fouet !

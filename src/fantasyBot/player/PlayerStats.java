@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import fantasyBot.Globals;
 import fantasyBot.Main;
 import net.dv8tion.jda.core.entities.User;
 
@@ -15,16 +17,22 @@ public class PlayerStats {
 	private String name;
 
 	private Experience xp;
+	
+	private ArrayList<Ability> abilitys;
 
 	private int maxHP;
-	private int attackDamage;
+	private int maxEnergy;
 
 	public PlayerStats(User player) {
 		playerID = player.getIdLong();
 		name = player.getName();
+		
+		abilitys = new ArrayList<Ability>();
+		abilitys.add(Globals.getAbilitys().get(0));
+		abilitys.add(Globals.getAbilitys().get(1)); //Add somes abilitys for test features
 
 		maxHP = 10;
-		attackDamage = 2;
+		maxEnergy = 100;
 
 		xp = new Experience(1, 0);
 	}
@@ -45,29 +53,8 @@ public class PlayerStats {
 		}
 
 		maxHP = 10;
-		attackDamage = 2;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public int getMaxHP() {
-		return maxHP;
-	}
-
-	public int getAttackDamage() {
-		return attackDamage;
-	}
-
-	public long getPlayerID() {
-		return playerID;
-	}
-
-	public Experience getExperience() {
-		return xp;
-	}
-
+	
 	public void save(String folder) {
 		File file = new File(folder + "/" + String.valueOf(playerID));
 
@@ -82,5 +69,33 @@ public class PlayerStats {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getMaxHP() {
+		return maxHP;
+	}
+
+	public long getPlayerID() {
+		return playerID;
+	}
+
+	public Experience getExperience() {
+		return xp;
+	}
+
+	public int getMaxEnergy() {
+		return maxEnergy;
+	}
+
+	public void setMaxEnergy(int maxEnergie) {
+		this.maxEnergy = maxEnergie;
+	}
+
+	public ArrayList<Ability> getAbilitys() {
+		return abilitys;
 	}
 }

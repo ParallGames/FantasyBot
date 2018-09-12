@@ -1,5 +1,6 @@
 package fantasyBot;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import net.dv8tion.jda.core.AccountType;
@@ -21,10 +22,22 @@ public class Main {
 			return;
 		}
 
+		try {
+			Globals.loadAbilitys();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		System.out.println("Capacités chargées !");
+		
 		Globals.loadPlayers();
+		
+		System.out.println("Joueurs Chargées");
 
 		jda.addEventListener(new EventListener());
-		jda.getTextChannelsByName("log-bot", true).get(0).sendMessage("Bonjour !").complete();
+		jda.getTextChannelsByName("log-bot", true).get(0).sendMessage("Bonjour ! Un total de " + Globals.getAbilitys().size() + " capacités a été chargés."
+				+ " " + Globals.getPlayers().size() + " joueurs ont rejoint le jeu !").complete();
 
 		Scanner sc = new Scanner(System.in);
 
