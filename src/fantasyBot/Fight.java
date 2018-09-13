@@ -66,7 +66,8 @@ public class Fight {
 	}
 
 	public void player1Turn(int abilityNumber) {
-		if(abilityNumber != 0) {
+		abilityNumber--;
+		if(abilityNumber != -1) {
 			player2.recieveDamage(((Player) player1).getAbilitys().get(abilityNumber).getDamage());
 		}else {
 			player2.recieveDamage(((Spider) player1).getAttackDamages());
@@ -84,7 +85,7 @@ public class Fight {
 						.complete();
 			}
 
-			if (player2 instanceof Player || player1 instanceof Spider) {
+			if (player2 instanceof Player && player1 instanceof Spider) {
 				((Player) player2).getPrivateChannel()
 						.sendMessage(player1.getName() + " vous a infligé " + ((Spider) player1).getAttackDamages()
 								+ " ! Il vous reste " + player2.getHP() + " sur " + player2.getMaxHealthPoints()
@@ -92,7 +93,7 @@ public class Fight {
 						.complete();
 			}
 			
-			if(player2 instanceof Player || player1 instanceof Player) {
+			if(player2 instanceof Player && player1 instanceof Player) {
 				((Player) player2).getPrivateChannel()
 				.sendMessage(player1.getName() + " vous a infligé " + ((Player) player1).getAbilitys().get(abilityNumber).getDamage()
 						+ " ! Il vous reste " + player2.getHP() + " sur " + player2.getMaxHealthPoints()
@@ -106,7 +107,8 @@ public class Fight {
 	}
 
 	public void player2Turn(int abilityNumber) {
-		if(abilityNumber != 0) {
+		abilityNumber--;
+		if(abilityNumber != -1) {
 			player1.recieveDamage(((Player) player2).getAbilitys().get(abilityNumber).getDamage());
 		}else {
 			player1.recieveDamage(((Spider) player2).getAttackDamages());
@@ -124,15 +126,15 @@ public class Fight {
 						.complete();
 			}
 			
-			if (player2 instanceof Player || player1 instanceof Spider) {
-				((Player) player2).getPrivateChannel()
+			if (player1 instanceof Player && player2 instanceof Spider) {
+				((Player) player1).getPrivateChannel()
 						.sendMessage(player2.getName() + " vous a infligé " + ((Spider) player2).getAttackDamages()
 								+ " ! Il vous reste " + player1.getHP() + " sur " + player1.getMaxHealthPoints()
 								+ " ! ")
 						.complete();
 			}
 			
-			if(player2 instanceof Player || player1 instanceof Player) {
+			if(player2 instanceof Player && player1 instanceof Player) {
 				((Player) player2).getPrivateChannel()
 				.sendMessage(player2.getName() + " vous a infligé " + ((Player) player2).getAbilitys().get(abilityNumber).getDamage()
 						+ " ! Il vous reste " + player1.getHP() + " sur " + player1.getMaxHealthPoints()
