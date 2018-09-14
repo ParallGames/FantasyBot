@@ -30,6 +30,7 @@ public class PlayerStats {
 		abilitys = new ArrayList<Ability>();
 		abilitys.add(Globals.getAbilitys().get(0));
 		abilitys.add(Globals.getAbilitys().get(1)); //Add somes abilitys for test features
+		abilitys.add(Globals.getAbilitys().get(2));
 
 		maxHP = 10;
 		maxEnergy = 100;
@@ -45,6 +46,18 @@ public class PlayerStats {
 			name = Main.getJda().getUserById(playerID).getName();
 
 			xp = new Experience(input.readInt(), input.readInt());
+			
+			abilitys = new ArrayList<Ability>();
+			
+			int nmbOfAbility = input.readInt();
+			for(int i = 0; i < nmbOfAbility; i++) {
+				int nextAbilityID = input.readInt();
+				for(int j = 0; j < Globals.getAbilitys().size(); j++) {
+					if(nextAbilityID == Globals.getAbilitys().get(j).getId()) {
+						abilitys.add(Globals.getAbilitys().get(j));
+					}
+				}
+			}
 
 			input.close();
 		} catch (IOException e) {
@@ -64,6 +77,14 @@ public class PlayerStats {
 			output.writeLong(playerID);
 			output.writeInt(xp.getLevel());
 			output.writeInt(xp.getLevelActualPoints());
+			
+			//Saves the number of ability the player has
+			output.writeInt(abilitys.size());
+			
+			//Saves the id of the ability
+			for(int i = 0; i < abilitys.size(); i++) {
+				output.writeInt(abilitys.get(i).getId());
+			}
 
 			output.close();
 		} catch (IOException e) {

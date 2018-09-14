@@ -2,13 +2,15 @@ package fantasyBot.player;
 
 public class Ability {
 
+	private int id;
 	private String name;
 	private int damage;
 	private int energyCost;
 	private String abilityDescription;
 	private String abilityAttackDescription;
 	
-	public Ability(String name, int damage, int energyCost, String abilityDescription, String abilityAttackDescription) {
+	public Ability(int id, String name, int damage, int energyCost, String abilityDescription, String abilityAttackDescription) {
+		this.id = id;
 		this.name = name;
 		this.damage = damage;
 		this.energyCost = energyCost;
@@ -36,4 +38,7 @@ public class Ability {
 		return damage;
 	}
 
+	public int getId() {
+		return id;
+	}
 }

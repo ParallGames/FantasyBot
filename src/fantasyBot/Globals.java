@@ -12,6 +12,8 @@ public class Globals {
 	private static final String SAVE_PATH = System.getProperty("user.home") + "/.fantasyBot";
 
 	private static final String ABILITY_PATH = "ressources/Abilitys.txt";
+	
+	private static final String SEPARATOR = ":";
 
 	private static final ArrayList<Fight> fightsInProgress = new ArrayList<Fight>();
 
@@ -61,13 +63,15 @@ public class Globals {
 
 				if(!line.equals("")) {
 					if(!line.substring(0, 2).equals("//")) {
-						String name = line.split(":")[1];
-						int damage = Integer.parseInt(scanner.nextLine().split(":")[1]);
-						int energyCost = Integer.parseInt(scanner.nextLine().split(":")[1]);
-						String abilityDescription = scanner.nextLine().split(":")[1];
-						String abilityAttackDescription = scanner.nextLine().split(":")[1];
+						
+						int id = Integer.parseInt(line.split(SEPARATOR)[1]);
+						String name = scanner.nextLine().split(SEPARATOR)[1];
+						int damage = Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]);
+						int energyCost = Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]);
+						String abilityDescription = scanner.nextLine().split(SEPARATOR)[1];
+						String abilityAttackDescription = scanner.nextLine().split(SEPARATOR)[1];
 
-						Ability newAbility = new Ability(name, damage, energyCost, abilityDescription, abilityAttackDescription);
+						Ability newAbility = new Ability(id, name, damage, energyCost, abilityDescription, abilityAttackDescription);
 						abilitys.add(newAbility);
 						
 						System.out.println("Capacité " + newAbility.getName() + " chargé");
