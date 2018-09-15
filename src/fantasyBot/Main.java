@@ -29,9 +29,16 @@ public class Main {
 			return;
 		}
 		
-		
-		
 		System.out.println("Capacités chargées !");
+		
+		try {
+			Globals.loadMonsters();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		System.out.println("Monstres chargées !");
 		
 		Globals.loadPlayers();
 		

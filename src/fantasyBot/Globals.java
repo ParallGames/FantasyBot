@@ -3,8 +3,10 @@ package fantasyBot;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
+import fantasyBot.character.Monster;
 import fantasyBot.player.Ability;
 import fantasyBot.player.PlayerStats;
 
@@ -12,12 +14,20 @@ public class Globals {
 	private static final String SAVE_PATH = System.getProperty("user.home") + "/.fantasyBot";
 
 	private static final String ABILITY_PATH = "ressources/Abilitys.txt";
-	
+
+	private static final String MONSTERS_PATH = "ressources/Monsters.txt";
+
 	private static final String SEPARATOR = ":";
+	
+	private static final Random randomGenerator = new Random();
+
+	private static final int NUMBER_MAX_OF_ABILITY = 4;
 
 	private static final ArrayList<Fight> fightsInProgress = new ArrayList<Fight>();
 
 	private static final ArrayList<PlayerStats> players = new ArrayList<PlayerStats>();
+
+	private static final ArrayList<Monster> monsters = new ArrayList<Monster>();
 
 	private static final ArrayList<Ability> abilitys = new ArrayList<Ability>();
 
@@ -29,6 +39,19 @@ public class Globals {
 		for (PlayerStats player : players) {
 			if (player.getPlayerID() == id) {
 				return player;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param id the ability id from the file of {@link #ABILITY_PATH}
+	 * @return the ability with the same id or null if is not found
+	 */
+	public static Ability getAbilityByID(int id) {
+		for(Ability ability : abilitys) {
+			if(ability.getId() == id) {
+				return ability;
 			}
 		}
 		return null;
@@ -63,7 +86,7 @@ public class Globals {
 
 				if(!line.equals("")) {
 					if(!line.substring(0, 2).equals("//")) {
-						
+
 						int id = Integer.parseInt(line.split(SEPARATOR)[1]);
 						String name = scanner.nextLine().split(SEPARATOR)[1];
 						int damage = Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]);
@@ -73,7 +96,7 @@ public class Globals {
 
 						Ability newAbility = new Ability(id, name, damage, energyCost, abilityDescription, abilityAttackDescription);
 						abilitys.add(newAbility);
-						
+
 						System.out.println("Capacité " + newAbility.getName() + " chargé");
 					}
 				}
@@ -83,7 +106,42 @@ public class Globals {
 			scanner.close();
 		}
 	}
-	
+
+	public static void loadMonsters() throws FileNotFoundException {
+		File file = new File(MONSTERS_PATH);
+
+		Scanner scanner = new Scanner(file);
+
+		try {
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+
+				if(!line.equals("")) {
+					if(!line.substring(0, 2).equals("//")) {
+
+						int id = Integer.parseInt(line.split(SEPARATOR)[1]);
+						String name = scanner.nextLine().split(SEPARATOR)[1];
+						int health = Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]);
+						int energy = Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]);
+
+						ArrayList<Ability> abilitysOfMonster = new ArrayList<Ability>();
+						for(int i = 0; i < NUMBER_MAX_OF_ABILITY; i++) {
+							Ability ability = getAbilityByID(Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]));
+							if(!(ability == null)) {
+								abilitysOfMonster.add(ability);
+							}
+						}
+
+						Monster monster = new Monster(id, name, health, energy, abilitysOfMonster);
+						monsters.add(monster);
+					}
+				}
+			}
+		} finally {
+			scanner.close();
+		}
+	}
+
 	public static ArrayList<Fight> getFightsInProgress() {
 		return fightsInProgress;
 	}
@@ -94,5 +152,13 @@ public class Globals {
 
 	public static ArrayList<Ability> getAbilitys() {
 		return abilitys;
+	}
+
+	public static ArrayList<Monster> getMonsters() {
+		return monsters;
+	}
+
+	public static Random getRandomgenerator() {
+		return randomGenerator;
 	}
 }

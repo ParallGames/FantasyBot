@@ -15,21 +15,12 @@ public class Player extends Character {
 		this.maxHealthPoints = stats.getMaxHP();
 		this.hp = stats.getMaxHP();
 		this.energy = stats.getMaxEnergy();
+		this.maxEnergy = stats.getMaxEnergy();
 		
 		this.abilitys = stats.getAbilitys();
 
 		this.channel = Main.getJda().getUserById(stats.getPlayerID()).openPrivateChannel().complete();
 		this.playerID = stats.getPlayerID();
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public int getMaxHealthPoints() {
-		return maxHealthPoints;
 	}
 
 	public PrivateChannel getPrivateChannel() {
