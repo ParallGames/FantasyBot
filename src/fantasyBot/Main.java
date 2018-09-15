@@ -29,6 +29,8 @@ public class Main {
 			return;
 		}
 		
+		
+		
 		System.out.println("Capacités chargées !");
 		
 		Globals.loadPlayers();

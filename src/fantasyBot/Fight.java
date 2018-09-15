@@ -2,7 +2,7 @@ package fantasyBot;
 
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
-import fantasyBot.character.ennemies.Spider;
+import fantasyBot.character.ennemies.Monster;
 
 public class Fight {
 
@@ -70,7 +70,7 @@ public class Fight {
 		if(abilityNumber != -1) {
 			player2.recieveDamage(((Player) player1).getAbilitys().get(abilityNumber).getDamage());
 		}else {
-			player2.recieveDamage(((Spider) player1).getAttackDamages());
+			player2.recieveDamage(((Monster) player1).getAttackDamages());
 		}
 
 		if (player2.isDead()) {
@@ -85,9 +85,9 @@ public class Fight {
 						.complete();
 			}
 
-			if (player2 instanceof Player && player1 instanceof Spider) {
+			if (player2 instanceof Player && player1 instanceof Monster) {
 				((Player) player2).getPrivateChannel()
-						.sendMessage(player1.getName() + " vous a infligé " + ((Spider) player1).getAttackDamages()
+						.sendMessage(player1.getName() + " vous a infligé " + ((Monster) player1).getAttackDamages()
 								+ " ! Il vous reste " + player2.getHP() + " sur " + player2.getMaxHealthPoints()
 								+ " ! ")
 						.complete();
@@ -111,7 +111,7 @@ public class Fight {
 		if(abilityNumber != -1) {
 			player1.recieveDamage(((Player) player2).getAbilitys().get(abilityNumber).getDamage());
 		}else {
-			player1.recieveDamage(((Spider) player2).getAttackDamages());
+			player1.recieveDamage(((Monster) player2).getAttackDamages());
 		}
 		
 		if (player1.isDead()) {
@@ -126,9 +126,9 @@ public class Fight {
 						.complete();
 			}
 			
-			if (player1 instanceof Player && player2 instanceof Spider) {
+			if (player1 instanceof Player && player2 instanceof Monster) {
 				((Player) player1).getPrivateChannel()
-						.sendMessage(player2.getName() + " vous a infligé " + ((Spider) player2).getAttackDamages()
+						.sendMessage(player2.getName() + " vous a infligé " + ((Monster) player2).getAttackDamages()
 								+ " ! Il vous reste " + player1.getHP() + " sur " + player1.getMaxHealthPoints()
 								+ " ! ")
 						.complete();

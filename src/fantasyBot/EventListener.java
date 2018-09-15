@@ -2,7 +2,7 @@ package fantasyBot;
 
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
-import fantasyBot.character.ennemies.Spider;
+import fantasyBot.character.ennemies.Monster;
 import fantasyBot.player.PlayerStats;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -123,7 +123,7 @@ public class EventListener extends ListenerAdapter {
 				Character ennemy;
 
 				if (ennemyPlayer == null) {
-					ennemy = new Spider();
+					ennemy = new Monster();
 				} else {
 					PlayerStats player2Stats = null;
 

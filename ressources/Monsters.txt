@@ -1,0 +1,27 @@
+//        MONSTERS-LIST
+//-----------------------------
+//Format :
+//
+//name:nameOfMonster
+//health:intHealth
+//energy:intEnergy
+//abilityId1:idOfAbility
+//abilityId2:idOfAbility
+//abilityId3:idOfAbility //you can set a empty string
+//abilityId4:idOfAbility
+
+name:Araignée
+health:5
+energy:20
+abilityId1:0
+abilityId2:1
+abilityId3:8
+abilityId4:
+
+name:Draqon
+health:20
+energy:50
+abilityId1:0
+abilityId2:1
+abilityId3:8
+abilityId4:

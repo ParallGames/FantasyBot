@@ -1,17 +1,10 @@
 package fantasyBot.character;
 
-import java.util.ArrayList;
-
 import fantasyBot.Main;
-import fantasyBot.player.Ability;
 import fantasyBot.player.PlayerStats;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 
 public class Player extends Character {
-
-	private String name;
-	private int maxHealthPoints;
-	private ArrayList<Ability> abilitys;
 
 	private PrivateChannel channel;
 	private long playerID;
@@ -21,6 +14,7 @@ public class Player extends Character {
 
 		this.maxHealthPoints = stats.getMaxHP();
 		this.hp = stats.getMaxHP();
+		this.energy = stats.getMaxEnergy();
 		
 		this.abilitys = stats.getAbilitys();
 
@@ -44,9 +38,5 @@ public class Player extends Character {
 
 	public long getPlayerID() {
 		return playerID;
-	}
-
-	public ArrayList<Ability> getAbilitys() {
-		return abilitys;
 	}
 }
