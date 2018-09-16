@@ -49,4 +49,8 @@ public abstract class Character {
 	public void setMaxEnergy(int maxEnergy) {
 		this.maxEnergy = maxEnergy;
 	}
+
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
 }

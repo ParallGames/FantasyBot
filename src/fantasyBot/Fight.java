@@ -78,7 +78,7 @@ public class Fight {
 		while(!attackIsOK) {
 			if((((Character) player1).getAbilitys().get(abilityNumber).getEnergyCost() > ((Character) player1).getEnergy())) {
 				if(player1 instanceof Player) {
-					((Player) player1).getPrivateChannel().sendMessage("Vous ne possedez pas assez d'energie !").submit();
+					((Player) player1).getPrivateChannel().sendMessage("Vous ne possèdez pas assez d'énergie !").submit();
 					return;
 				}else {
 					abilityNumber = Globals.getRandomgenerator().nextInt(player1.getAbilitys().size());
@@ -89,6 +89,7 @@ public class Fight {
 		}
 
 		player2.recieveDamage(((Character) player1).getAbilitys().get(abilityNumber).getDamage());
+		player1.setEnergy(player1.getEnergy() - ((Character) player1).getAbilitys().get(abilityNumber).getEnergyCost());
 
 		if (player2.isDead()) {
 			player1Win(abilityNumber);
@@ -117,37 +118,41 @@ public class Fight {
 
 	public void player2Turn(int abilityNumber) {
 		abilityNumber--;
-		if(abilityNumber != -1) {
-			player1.recieveDamage(((Player) player2).getAbilitys().get(abilityNumber).getDamage());
-		}else {
-			player1.recieveDamage(((Monster) player2).getAttackDamages());
+		
+		boolean attackIsOK = false;
+		while(!attackIsOK) {
+			if((((Character) player2).getAbilitys().get(abilityNumber).getEnergyCost() > ((Character) player2).getEnergy())) {
+				if(player2 instanceof Player) {
+					((Player) player2).getPrivateChannel().sendMessage("Vous ne possèdez pas assez d'énergie !").submit();
+					return;
+				}else {
+					abilityNumber = Globals.getRandomgenerator().nextInt(player2.getAbilitys().size());
+				}
+			}else {
+				attackIsOK = true;
+			}
 		}
-
+		
+		player1.recieveDamage(((Character) player2).getAbilitys().get(abilityNumber).getDamage());
+		player2.setEnergy(player2.getEnergy() - ((Character) player2).getAbilitys().get(abilityNumber).getEnergyCost());
+		
 		if (player1.isDead()) {
 			player2Win(abilityNumber);
 			return;
 		} else {
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel()
-				.sendMessage("Vous avez infligé " + ((Player) player2).getAbilitys().get(abilityNumber).getDamage() + " à " + player1.getName()
-				+ " ! " + "Il lui reste " + player1.getHP() + " sur " + player1.getMaxHealth()
+				.sendMessage("Vous avez infligé " + ((Character) player2).getAbilitys().get(abilityNumber).getDamage() + " à " + player2.getName()
+				+ " ! " + "Il lui reste " + player1.getHP() + " PV sur " + player1.getMaxHealth()
 				+ " !")
 				.complete();
 			}
 
-			if (player1 instanceof Player && player2 instanceof Monster) {
+			if(player1 instanceof Player) {
 				((Player) player1).getPrivateChannel()
-				.sendMessage(player2.getName() + " vous a infligé " + ((Monster) player2).getAttackDamages()
-						+ " ! Il vous reste " + player1.getHP() + " sur " + player1.getMaxHealth()
-						+ " ! ")
-				.complete();
-			}
-
-			if(player2 instanceof Player && player1 instanceof Player) {
-				((Player) player2).getPrivateChannel()
-				.sendMessage(player2.getName() + " vous a infligé " + ((Player) player2).getAbilitys().get(abilityNumber).getDamage()
-						+ " ! Il vous reste " + player1.getHP() + " sur " + player1.getMaxHealth()
-						+ " ! ")
+				.sendMessage(player2.getName() + " vous a infligé " + ((Character) player2).getAbilitys().get(abilityNumber).getDamage()
+						+ " ! Il vous reste " + player1.getHP() + " PV sur " + player1.getMaxHealth()
+						+ " !")
 				.complete();
 			}
 		}

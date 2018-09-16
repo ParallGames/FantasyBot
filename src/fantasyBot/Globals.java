@@ -22,6 +22,8 @@ public class Globals {
 	private static final Random randomGenerator = new Random();
 
 	private static final int NUMBER_MAX_OF_ABILITY = 4;
+	
+	private static int numberOfMonster;
 
 	private static final ArrayList<Fight> fightsInProgress = new ArrayList<Fight>();
 
@@ -56,7 +58,11 @@ public class Globals {
 		}
 		return null;
 	}
-
+	
+	public static Monster getMonsterByIndex(int index) {
+		return new Monster(monsters.get(index));
+	}
+	
 	public static void loadPlayers() {
 		File folder = new File(SAVE_PATH);
 		if (folder.exists()) {
@@ -137,6 +143,7 @@ public class Globals {
 					}
 				}
 			}
+			numberOfMonster = monsters.size();
 		} finally {
 			scanner.close();
 		}
@@ -154,11 +161,11 @@ public class Globals {
 		return abilitys;
 	}
 
-	public static ArrayList<Monster> getMonsters() {
-		return monsters;
-	}
-
 	public static Random getRandomgenerator() {
 		return randomGenerator;
+	}
+
+	public static int getNumberOfMonster() {
+		return numberOfMonster;
 	}
 }

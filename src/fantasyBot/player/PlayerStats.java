@@ -47,6 +47,9 @@ public class PlayerStats {
 
 			xp = new Experience(input.readInt(), input.readInt());
 			
+			maxHP = input.readInt();
+			maxEnergy = input.readInt();
+			
 			abilitys = new ArrayList<Ability>();
 			
 			int nmbOfAbility = input.readInt();
@@ -77,6 +80,9 @@ public class PlayerStats {
 			output.writeLong(playerID);
 			output.writeInt(xp.getLevel());
 			output.writeInt(xp.getLevelActualPoints());
+			
+			output.writeInt(maxHP);
+			output.writeInt(maxEnergy);
 			
 			//Saves the number of ability the player has
 			output.writeInt(abilitys.size());

@@ -17,6 +17,16 @@ public class Monster extends Character {
 		this.maxEnergy = maxEnergy;
 		this.abilitys = abilityList;
 	}
+	
+	public Monster(Monster monster) {
+		this.id = monster.getId();
+		this.name = monster.getName();
+		this.hp = monster.getMaxHealth();
+		this.maxHealthPoints = monster.getMaxHealth();
+		this.energy = monster.getMaxEnergy();
+		this.maxEnergy = monster.getMaxEnergy();
+		this.abilitys = monster.getAbilitys();
+	}
 
 	public int getId() {
 		return id;

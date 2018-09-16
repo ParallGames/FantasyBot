@@ -74,7 +74,7 @@ public class EventListener extends ListenerAdapter {
 			try {
 				event.getMessage().delete().complete();
 			} catch (Exception e) {
-				System.err.println("The message can't be removed.");
+				System.err.println("The message can't be removed or you are in a private channel.");
 			}
 
 			boolean messageSenderAsAlreadyAFight = false;
@@ -122,8 +122,8 @@ public class EventListener extends ListenerAdapter {
 				Character ennemy;
 
 				if (ennemyPlayer == null) {
-					int randomIndex = Globals.getRandomgenerator().nextInt(Globals.getMonsters().size());
-					ennemy = Globals.getMonsters().get(randomIndex);
+					int randomIndex = Globals.getRandomgenerator().nextInt(Globals.getNumberOfMonster() + 1);
+					ennemy = Globals.getMonsterByIndex(randomIndex);
 				} else {
 					PlayerStats player2Stats = null;
 
