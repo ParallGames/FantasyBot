@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import fantasyBot.character.Monster;
 import fantasyBot.player.Ability;
+import fantasyBot.player.MonsterStats;
 import fantasyBot.player.PlayerStats;
 
 public class Globals {
@@ -24,7 +25,7 @@ public class Globals {
 
 	private static final ArrayList<PlayerStats> players = new ArrayList<PlayerStats>();
 
-	private static final ArrayList<Monster> monsters = new ArrayList<Monster>();
+	private static final ArrayList<MonsterStats> monsters = new ArrayList<MonsterStats>();
 
 	private static final ArrayList<Ability> abilities = new ArrayList<Ability>();
 
@@ -55,7 +56,7 @@ public class Globals {
 	}
 	
 	public static Monster getMonsterByIndex(int index) {
-		return new Monster(monsters.get(index));
+		return new Monster(monsters.get(index).createMonster());
 	}
 	
 	public static void loadPlayers() {
@@ -133,7 +134,7 @@ public class Globals {
 							}
 						}
 
-						Monster monster = new Monster(id, name, health, energy, abilitysOfMonster);
+						MonsterStats monster = new MonsterStats(id, name, health, energy, abilitysOfMonster);
 						monsters.add(monster);
 					}
 				}

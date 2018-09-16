@@ -44,10 +44,9 @@ public class Fight {
 			}
 
 			Message mess = ((Player) player1).getPrivateChannel().sendMessage(message).complete();
-			mess.addReaction("1⃣").complete();
-			mess.addReaction("2⃣").complete();
-			mess.addReaction("3⃣").complete();
-			mess.addReaction("4⃣").complete();
+			
+			assigneReaction(mess, ((Player) (player1)));
+
 		} else {
 			int indexOfAbility = RandMath.randInt(((Monster) player1).getAbilities().size()) + 1;
 			player1Turn(indexOfAbility);
@@ -68,13 +67,28 @@ public class Fight {
 
 			Message mess = ((Player) player2).getPrivateChannel().sendMessage(message).complete();
 
-			mess.addReaction("1⃣").complete();
-			mess.addReaction("2⃣").complete();
-			mess.addReaction("3⃣").complete();
-			mess.addReaction("4⃣").complete();
+			assigneReaction(mess, ((Player) (player2)));
 		} else {
 			int indexOfAbility = RandMath.randInt(((Monster) player2).getAbilities().size()) + 1;
 			player2Turn(indexOfAbility);
+		}
+	}
+	
+	public void assigneReaction(Message mess, Player player) {
+		if(player.getAbilities().size() >= 1) {
+			mess.addReaction("1⃣").complete();
+		}
+		
+		if(player.getAbilities().size() >= 2) {
+			mess.addReaction("2⃣").complete();
+		}
+		
+		if(player.getAbilities().size() >= 3) {
+			mess.addReaction("3⃣").complete();
+		}
+		
+		if(player.getAbilities().size() >= 4) {
+			mess.addReaction("4⃣").complete();
 		}
 	}
 
@@ -149,7 +163,7 @@ public class Fight {
 		} else {
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel()
-				.sendMessage("Vous avez infligé " + ((Character) player2).getAbilities().get(abilityNumber).getDamage() + " à " + player2.getName()
+				.sendMessage("Vous avez infligé " + ((Character) player2).getAbilities().get(abilityNumber).getDamage() + " à " + player1.getName()
 				+ " ! " + "Il lui reste " + player1.getHP() + " PV sur " + player1.getMaxHealth()
 				+ " !")
 				.complete();
