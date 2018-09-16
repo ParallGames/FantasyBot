@@ -6,6 +6,8 @@ import fantasyBot.player.PlayerStats;
 import fantasyBot.utility.RandMath;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.priv.react.PrivateMessageReactionAddEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class EventListener extends ListenerAdapter {
@@ -17,54 +19,6 @@ public class EventListener extends ListenerAdapter {
 		String message = event.getMessage().getContentRaw();
 		User author = event.getAuthor();
 
-		for (Fight fight : Globals.getFightsInProgress()) {
-			if (event.getPrivateChannel() != null) {
-				if (fight.getPlayer().getName().equals(author.getName())) {
-					boolean attackIsCorrect = false;
-
-					try {
-						for (int j = 1; j < 5; j++) {
-							if (Integer.parseInt(message) == j) {
-								attackIsCorrect = true;
-							}
-						}
-					} catch (NumberFormatException e) {
-						author.openPrivateChannel().complete().sendMessage("L'attaque est invalide !").complete();
-					}
-
-					if (attackIsCorrect) {
-						if(fight.isTurnOfPlayer1()) {
-							fight.player1Turn(Integer.parseInt(message));
-						}else {
-							author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
-						}
-					}
-					return;
-				} else if (fight.getEnnemy().getName().equals(author.getName())) {
-					boolean attackIsCorrect = false;
-
-					try {
-						for (int j = 1; j < 5; j++) {
-							if (Integer.parseInt(message) == j) {
-								attackIsCorrect = true;
-							}
-						}
-					} catch (NumberFormatException e) {
-						author.openPrivateChannel().complete().sendMessage("L'attaque est invalide !").complete();
-					}
-
-					if (attackIsCorrect) {
-						if(!fight.isTurnOfPlayer1()) {
-							fight.player2Turn(Integer.parseInt(message));
-						} else {
-							author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
-						}
-					}
-					return;
-				}
-			}
-		}
-
 		if (message.charAt(0) != PREFIX) {
 			return;
 		}
@@ -75,7 +29,7 @@ public class EventListener extends ListenerAdapter {
 			try {
 				event.getMessage().delete().complete();
 			} catch (Exception e) {
-				System.err.println("The message can't be removed or you are in a private channel.");
+				// Do nothing, that's not an issue.
 			}
 
 			boolean messageSenderAsAlreadyAFight = false;
@@ -149,8 +103,77 @@ public class EventListener extends ListenerAdapter {
 				Globals.getFightsInProgress().add(fight);
 			}
 		}
+	}
+	
+	@Override
+	public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
+		String message = event.getMessage().getContentRaw();
+		User author = event.getAuthor();
+		
+		for (Fight fight : Globals.getFightsInProgress()) {
+			if (fight.getPlayer().getName().equals(author.getName())) {
+				boolean attackIsCorrect = false;
+					
+				try {
+					for (int j = 1; j < 5; j++) {
+						if (Integer.parseInt(message) == j) {
+							attackIsCorrect = true;
+						}
+					}
+				} catch (NumberFormatException e) {
+					author.openPrivateChannel().complete().sendMessage("L'attaque est invalide !").complete();
+				}
+				
+				if (attackIsCorrect) {
+					if(fight.isTurnOfPlayer1()) {
+						fight.player1Turn(Integer.parseInt(message));
+					}else {
+						author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();						}
+					}
+				return;
+			} else if (fight.getEnnemy().getName().equals(author.getName())) {
+				boolean attackIsCorrect = false;
 
-		System.out.println(message);
-		System.out.println(author.getName());
+				try {
+					for (int j = 1; j < 5; j++) {
+						if (Integer.parseInt(message) == j) {
+							attackIsCorrect = true;
+						}
+					}
+				} catch (NumberFormatException e) {
+					author.openPrivateChannel().complete().sendMessage("L'attaque est invalide !").complete();
+				}
+
+				if (attackIsCorrect) {
+					if(!fight.isTurnOfPlayer1()) {
+						fight.player2Turn(Integer.parseInt(message));
+					} else {
+						author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
+					}
+				}
+				return;
+			}
+		}
+	}
+	
+	@Override
+	public void onPrivateMessageReactionAdd(PrivateMessageReactionAddEvent event) {
+		System.out.println(event.getUser().getName());
+		
+		String emote = event.getReaction().getReactionEmote().getName();
+		
+		int selection = 0;
+		
+		if(emote.equals("1⃣")) {
+			selection = 1;
+		} else if(emote.equals("2⃣")) {
+			selection = 2;
+		} else if(emote.equals("3⃣")) {
+			selection = 3;
+		} else if(emote.equals("4⃣")) {
+			selection = 4;
+		}
+		
+		System.out.println(selection);
 	}
 }
