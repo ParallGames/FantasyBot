@@ -23,7 +23,7 @@ public class Fight {
 		}
 
 		if (player2 instanceof Player) {
-			((Player) player2).getPrivateChannel().sendMessage("Vous avez commencé un duel !\n"
+			((Player) player2).getPrivateChannel().sendMessage("Vous défie en duel !\n"
 					+ "----------------------------\n" + player2.getName() + " contre " + player1.getName() + " !")
 			.complete();
 		}
@@ -36,11 +36,14 @@ public class Fight {
 		if (player1 instanceof Player) {
 			String message = "C'est à " + player1.getName() + " de jouer !\n" + "Votre ennemie possède "
 					+ player2.getHP() + " points de vie sur " + player2.getMaxHealth() + ".\n"
+					+ "Vous possèder " + player1.getEnergy() + " points d'énergie.\n"
 					+ "Quelle attaque souhaitez-vous effectuer ?\n"
 					+ "------------------------------------------\n";
 
 			for(int i = 0; i < ((Player) player1).getAbilities().size(); i++) {
-				message += "\n" + (i + 1) + ". " + ((Player) player1).getAbilities().get(i).getName() + ".";
+				message += "\n" + (i + 1) + ". " + ((Player) player1).getAbilities().get(i).getName() + " / "
+						+ "Dégats " + ((Player) player1).getAbilities().get(i).getDamage() + " / "
+						+ "Coût en énergie " + ((Player) player1).getAbilities().get(i).getEnergyCost();
 			}
 
 			Message mess = ((Player) player1).getPrivateChannel().sendMessage(message).complete();
@@ -58,11 +61,14 @@ public class Fight {
 
 			String message = "C'est à " + player2.getName() + " de jouer !\n" + "Votre ennemie possède "
 					+ player1.getHP() + " points de vie sur " + player1.getMaxHealth() + ".\n"
+					+ "Vous possèder " + player2.getEnergy() + " points d'énergie.\n"
 					+ "Quelle attaque souhaitez-vous effectuer ?\n"
 					+ "------------------------------------------\n";
 
 			for(int i = 0; i < ((Player) player2).getAbilities().size(); i++) {
-				message += "\n" + (i + 1) + ". " + ((Player) player2).getAbilities().get(i).getName() + ".";
+				message += "\n" + (i + 1) + ". " + ((Player) player2).getAbilities().get(i).getName() + " / "
+						+ "Dégats " + ((Player) player2).getAbilities().get(i).getDamage() + " / "
+						+ "Coût en énergie " + ((Player) player2).getAbilities().get(i).getEnergyCost();
 			}
 
 			Message mess = ((Player) player2).getPrivateChannel().sendMessage(message).complete();
