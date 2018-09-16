@@ -6,16 +6,16 @@ public class Ability {
 	private String name;
 	private int damage;
 	private int energyCost;
-	private String abilityDescription;
-	private String abilityAttackDescription;
+	private String description;
+	private String attackDescription;
 	
-	public Ability(int id, String name, int damage, int energyCost, String abilityDescription, String abilityAttackDescription) {
+	public Ability(int id, String name, int damage, int energyCost, String description, String attackDescription) {
 		this.id = id;
 		this.name = name;
 		this.damage = damage;
 		this.energyCost = energyCost;
-		this.abilityDescription = abilityDescription;
-		this.abilityAttackDescription = abilityAttackDescription;
+		this.description = description;
+		this.attackDescription = attackDescription;
 	}
 
 	public String getName() {
@@ -26,12 +26,12 @@ public class Ability {
 		return energyCost;
 	}
 	
-	public String getAbilityDescription() {
-		return abilityDescription;
+	public String description() {
+		return description;
 	}
 
-	public String getAbilityAttackDescription() {
-		return abilityAttackDescription;
+	public String attackDescription() {
+		return attackDescription;
 	}
 
 	public int getDamage() {

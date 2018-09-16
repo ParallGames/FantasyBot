@@ -3,7 +3,6 @@ package fantasyBot;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import fantasyBot.character.Monster;
@@ -13,17 +12,13 @@ import fantasyBot.player.PlayerStats;
 public class Globals {
 	private static final String SAVE_PATH = System.getProperty("user.home") + "/.fantasyBot";
 
-	private static final String ABILITY_PATH = "ressources/Abilitys.txt";
+	private static final String ABILITY_PATH = "resources/Abilities.txt";
 
-	private static final String MONSTERS_PATH = "ressources/Monsters.txt";
+	private static final String MONSTERS_PATH = "resources/Monsters.txt";
 
 	private static final String SEPARATOR = ":";
-	
-	private static final Random randomGenerator = new Random();
 
 	private static final int NUMBER_MAX_OF_ABILITY = 4;
-	
-	private static int numberOfMonster;
 
 	private static final ArrayList<Fight> fightsInProgress = new ArrayList<Fight>();
 
@@ -31,7 +26,7 @@ public class Globals {
 
 	private static final ArrayList<Monster> monsters = new ArrayList<Monster>();
 
-	private static final ArrayList<Ability> abilitys = new ArrayList<Ability>();
+	private static final ArrayList<Ability> abilities = new ArrayList<Ability>();
 
 	/**
 	 * @param id the discord id of the player
@@ -51,7 +46,7 @@ public class Globals {
 	 * @return the ability with the same id or null if is not found
 	 */
 	public static Ability getAbilityByID(int id) {
-		for(Ability ability : abilitys) {
+		for(Ability ability : abilities) {
 			if(ability.getId() == id) {
 				return ability;
 			}
@@ -81,7 +76,7 @@ public class Globals {
 		}
 	}
 
-	public static void loadAbilitys() throws FileNotFoundException {
+	public static void loadAbilities() throws FileNotFoundException {
 		File file = new File(ABILITY_PATH);
 
 		Scanner scanner = new Scanner(file);
@@ -101,9 +96,9 @@ public class Globals {
 						String abilityAttackDescription = scanner.nextLine().split(SEPARATOR)[1];
 
 						Ability newAbility = new Ability(id, name, damage, energyCost, abilityDescription, abilityAttackDescription);
-						abilitys.add(newAbility);
+						abilities.add(newAbility);
 
-						System.out.println("Capacité " + newAbility.getName() + " chargé");
+						System.out.println("Capacité " + newAbility.getName() + " chargée");
 					}
 				}
 
@@ -143,7 +138,6 @@ public class Globals {
 					}
 				}
 			}
-			numberOfMonster = monsters.size();
 		} finally {
 			scanner.close();
 		}
@@ -157,15 +151,11 @@ public class Globals {
 		return players;
 	}
 
-	public static ArrayList<Ability> getAbilitys() {
-		return abilitys;
-	}
-
-	public static Random getRandomgenerator() {
-		return randomGenerator;
+	public static ArrayList<Ability> getAbilities() {
+		return abilities;
 	}
 
 	public static int getNumberOfMonster() {
-		return numberOfMonster;
+		return monsters.size();
 	}
 }

@@ -18,7 +18,7 @@ public class PlayerStats {
 
 	private Experience xp;
 	
-	private ArrayList<Ability> abilitys;
+	private ArrayList<Ability> abilities;
 
 	private int maxHP;
 	private int maxEnergy;
@@ -27,10 +27,10 @@ public class PlayerStats {
 		playerID = player.getIdLong();
 		name = player.getName();
 		
-		abilitys = new ArrayList<Ability>();
-		abilitys.add(Globals.getAbilitys().get(0));
-		abilitys.add(Globals.getAbilitys().get(1)); //Add somes abilitys for test features
-		abilitys.add(Globals.getAbilitys().get(2));
+		abilities = new ArrayList<Ability>();
+		abilities.add(Globals.getAbilities().get(0));
+		abilities.add(Globals.getAbilities().get(1)); //Add somes abilities for test features
+		abilities.add(Globals.getAbilities().get(2));
 
 		maxHP = 10;
 		maxEnergy = 100;
@@ -50,14 +50,14 @@ public class PlayerStats {
 			maxHP = input.readInt();
 			maxEnergy = input.readInt();
 			
-			abilitys = new ArrayList<Ability>();
+			abilities = new ArrayList<Ability>();
 			
 			int nmbOfAbility = input.readInt();
 			for(int i = 0; i < nmbOfAbility; i++) {
 				int nextAbilityID = input.readInt();
-				for(int j = 0; j < Globals.getAbilitys().size(); j++) {
-					if(nextAbilityID == Globals.getAbilitys().get(j).getId()) {
-						abilitys.add(Globals.getAbilitys().get(j));
+				for(int j = 0; j < Globals.getAbilities().size(); j++) {
+					if(nextAbilityID == Globals.getAbilities().get(j).getId()) {
+						abilities.add(Globals.getAbilities().get(j));
 					}
 				}
 			}
@@ -85,11 +85,11 @@ public class PlayerStats {
 			output.writeInt(maxEnergy);
 			
 			//Saves the number of ability the player has
-			output.writeInt(abilitys.size());
+			output.writeInt(abilities.size());
 			
 			//Saves the id of the ability
-			for(int i = 0; i < abilitys.size(); i++) {
-				output.writeInt(abilitys.get(i).getId());
+			for(int i = 0; i < abilities.size(); i++) {
+				output.writeInt(abilities.get(i).getId());
 			}
 
 			output.close();
@@ -122,7 +122,7 @@ public class PlayerStats {
 		this.maxEnergy = maxEnergie;
 	}
 
-	public ArrayList<Ability> getAbilitys() {
-		return abilitys;
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
 	}
 }

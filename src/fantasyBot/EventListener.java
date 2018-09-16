@@ -3,6 +3,7 @@ package fantasyBot;
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.PlayerStats;
+import fantasyBot.utility.RandMath;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -122,7 +123,7 @@ public class EventListener extends ListenerAdapter {
 				Character ennemy;
 
 				if (ennemyPlayer == null) {
-					int randomIndex = Globals.getRandomgenerator().nextInt(Globals.getNumberOfMonster() + 1);
+					int randomIndex = RandMath.randInt(Globals.getNumberOfMonster());
 					ennemy = Globals.getMonsterByIndex(randomIndex);
 				} else {
 					PlayerStats player2Stats = null;
