@@ -4,6 +4,7 @@ import fantasyBot.character.Character;
 import fantasyBot.character.Monster;
 import fantasyBot.character.Player;
 import fantasyBot.utility.RandMath;
+import net.dv8tion.jda.core.entities.Message;
 
 public class Fight {
 
@@ -42,7 +43,11 @@ public class Fight {
 				message += "\n" + (i + 1) + ". " + ((Player) player1).getAbilities().get(i).getName() + ".";
 			}
 
-			((Player) player1).getPrivateChannel().sendMessage(message).submit();
+			Message mess = ((Player) player1).getPrivateChannel().sendMessage(message).complete();
+			mess.addReaction("1⃣").complete();
+			mess.addReaction("2⃣").complete();
+			mess.addReaction("3⃣").complete();
+			mess.addReaction("4⃣").complete();
 		} else {
 			int indexOfAbility = RandMath.randInt(((Monster) player1).getAbilities().size()) + 1;
 			player1Turn(indexOfAbility);
@@ -61,7 +66,12 @@ public class Fight {
 				message += "\n" + (i + 1) + ". " + ((Player) player2).getAbilities().get(i).getName() + ".";
 			}
 
-			((Player) player2).getPrivateChannel().sendMessage(message).complete();
+			Message mess = ((Player) player2).getPrivateChannel().sendMessage(message).complete();
+
+			mess.addReaction("1⃣").complete();
+			mess.addReaction("2⃣").complete();
+			mess.addReaction("3⃣").complete();
+			mess.addReaction("4⃣").complete();
 		} else {
 			int indexOfAbility = RandMath.randInt(((Monster) player2).getAbilities().size()) + 1;
 			player2Turn(indexOfAbility);
@@ -75,7 +85,7 @@ public class Fight {
 		while(!attackIsOK) {
 			if(((Character) player1).getAbilities().get(abilityNumber).getEnergyCost() > ((Character) player1).getEnergy()) {
 				if(player1 instanceof Player) {
-					((Player) player1).getPrivateChannel().sendMessage("Vous ne possèdez pas assez d'énergie !").submit();
+					((Player) player1).getPrivateChannel().sendMessage("Vous ne possèdez pas assez d'énergie !").complete();
 					return;
 				}else {
 					abilityNumber =RandMath.randInt(player1.getAbilities().size());
@@ -95,7 +105,7 @@ public class Fight {
 			if (player1 instanceof Player) {
 				((Player) player1).getPrivateChannel()
 				.sendMessage("Vous avez infligé " + ((Character) player1).getAbilities().get(abilityNumber).getDamage() + " à " + player2.getName()
-				+ " ! " + "Il lui reste " + player2.getHP() + " sur " + player2.getMaxHealth()
+				+ " ! Il lui reste " + player2.getHP() + " sur " + player2.getMaxHealth()
 				+ " !")
 				.complete();
 			}
@@ -120,7 +130,7 @@ public class Fight {
 		while(!attackIsOK) {
 			if((((Character) player2).getAbilities().get(abilityNumber).getEnergyCost() > ((Character) player2).getEnergy())) {
 				if(player2 instanceof Player) {
-					((Player) player2).getPrivateChannel().sendMessage("Vous ne possèdez pas assez d'énergie !").submit();
+					((Player) player2).getPrivateChannel().sendMessage("Vous ne possèdez pas assez d'énergie !").complete();
 					return;
 				}else {
 					abilityNumber = RandMath.randInt(player2.getAbilities().size());
