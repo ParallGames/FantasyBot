@@ -3,6 +3,7 @@ package fantasyBot;
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.PlayerStats;
+import fantasyBot.utility.MessageBuilder;
 import fantasyBot.utility.RandMath;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -18,7 +19,7 @@ public class EventListener extends ListenerAdapter {
 		String message = event.getMessage().getContentRaw();
 		User author = event.getAuthor();
 
-		if (message.charAt(0) != PREFIX) {
+		if (message.length() == 0 || message.charAt(0) != PREFIX) {
 			return;
 		}
 
@@ -40,7 +41,9 @@ public class EventListener extends ListenerAdapter {
 			}
 
 			if (messageSenderAsAlreadyAFight) {
-				author.openPrivateChannel().complete().sendMessage("Vous avez déjà un combats en cours !").complete();
+				author.openPrivateChannel().complete()
+						.sendMessage(MessageBuilder.createErrorMessage("Vous avez déjà un combats en cours !"))
+						.complete();
 			} else {
 				Fight fight = new Fight();
 
@@ -64,8 +67,11 @@ public class EventListener extends ListenerAdapter {
 				User ennemyPlayer = null;
 
 				try {
-					if(message.substring(5).equalsIgnoreCase(author.getId())) {
-						author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas vous affronter vous-même !").complete();
+					if (message.substring(5).equalsIgnoreCase(author.getId())) {
+						author.openPrivateChannel().complete()
+								.sendMessage(MessageBuilder
+										.createErrorMessage("Vous ne pouvez pas vous affronter vous-même !"))
+								.complete();
 						return;
 					} else {
 						ennemyPlayer = Main.getJda().getUserById(message.substring(5));
@@ -103,41 +109,45 @@ public class EventListener extends ListenerAdapter {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onPrivateMessageReactionAdd(PrivateMessageReactionAddEvent event) {
 		User author = event.getUser();
-		
+
 		String emote = event.getReaction().getReactionEmote().getName();
-		
+
 		int selection = 0;
-		
-		if(emote.equals("1⃣")) {
+
+		if (emote.equals("1⃣")) {
 			selection = 1;
-		} else if(emote.equals("2⃣")) {
+		} else if (emote.equals("2⃣")) {
 			selection = 2;
-		} else if(emote.equals("3⃣")) {
+		} else if (emote.equals("3⃣")) {
 			selection = 3;
-		} else if(emote.equals("4⃣")) {
+		} else if (emote.equals("4⃣")) {
 			selection = 4;
 		} else {
 			return;
 		}
-		
+
 		for (Fight fight : Globals.getFightsInProgress()) {
 			if (fight.getPlayer().getName().equals(author.getName())) {
-				if(fight.isTurnOfPlayer1()) {
+				if (fight.isTurnOfPlayer1()) {
 					fight.player1Turn(selection);
 				} else {
-					author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !").complete();
+					author.openPrivateChannel().complete().sendMessage(MessageBuilder
+							.createErrorMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !"))
+							.complete();
 				}
 
 				return;
 			} else if (fight.getEnnemy().getName().equals(author.getName())) {
-				if(!fight.isTurnOfPlayer1()) {
+				if (!fight.isTurnOfPlayer1()) {
 					fight.player2Turn(selection);
 				} else {
-					author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !").complete();
+					author.openPrivateChannel().complete().sendMessage(MessageBuilder
+							.createErrorMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !"))
+							.complete();
 				}
 				return;
 			}

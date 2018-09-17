@@ -47,22 +47,18 @@ public class Globals {
 	 * @return the ability with the same id or null if is not found
 	 */
 	public static Ability getAbilityByID(int id) {
-		for(Ability ability : abilities) {
-			if(ability.getId() == id) {
+		for (Ability ability : abilities) {
+			if (ability.getId() == id) {
 				return ability;
 			}
 		}
 		return null;
 	}
-	
-	/*public static Monster getMonsterByIndex(int index) {
-		return new Monster(monsters.get(index).createMonster());
-	}*/
-	
+
 	public static Monster createMonster(int index) {
 		return new Monster(monsters.get(index));
 	}
-	
+
 	public static void loadPlayers() {
 		File folder = new File(SAVE_PATH);
 		if (folder.exists()) {
@@ -90,8 +86,8 @@ public class Globals {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 
-				if(!line.equals("")) {
-					if(!line.substring(0, 2).equals("//")) {
+				if (!line.equals("")) {
+					if (!line.substring(0, 2).equals("//")) {
 
 						int id = Integer.parseInt(line.split(SEPARATOR)[1]);
 						String name = scanner.nextLine().split(SEPARATOR)[1];
@@ -100,7 +96,8 @@ public class Globals {
 						String abilityDescription = scanner.nextLine().split(SEPARATOR)[1];
 						String abilityAttackDescription = scanner.nextLine().split(SEPARATOR)[1];
 
-						Ability newAbility = new Ability(id, name, damage, energyCost, abilityDescription, abilityAttackDescription);
+						Ability newAbility = new Ability(id, name, damage, energyCost, abilityDescription,
+								abilityAttackDescription);
 						abilities.add(newAbility);
 
 						System.out.println("Capacité " + newAbility.getName() + " chargée");
@@ -108,7 +105,7 @@ public class Globals {
 				}
 
 			}
-		}finally {
+		} finally {
 			scanner.close();
 		}
 	}
@@ -122,8 +119,8 @@ public class Globals {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 
-				if(!line.equals("")) {
-					if(!line.substring(0, 2).equals("//")) {
+				if (!line.equals("")) {
+					if (!line.substring(0, 2).equals("//")) {
 
 						int id = Integer.parseInt(line.split(SEPARATOR)[1]);
 						String name = scanner.nextLine().split(SEPARATOR)[1];
@@ -131,9 +128,9 @@ public class Globals {
 						int energy = Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]);
 
 						ArrayList<Ability> abilitysOfMonster = new ArrayList<Ability>();
-						for(int i = 0; i < NUMBER_MAX_OF_ABILITY; i++) {
+						for (int i = 0; i < NUMBER_MAX_OF_ABILITY; i++) {
 							Ability ability = getAbilityByID(Integer.parseInt(scanner.nextLine().split(SEPARATOR)[1]));
-							if(!(ability == null)) {
+							if (!(ability == null)) {
 								abilitysOfMonster.add(ability);
 							}
 						}

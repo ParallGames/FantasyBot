@@ -28,25 +28,27 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		System.out.println("Capacités chargées !");
-		
+
 		try {
 			Globals.loadMonsters();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		System.out.println("Monstres chargés !");
-		
+
 		Globals.loadPlayers();
-		
+
 		System.out.println("Joueurs Chargés !");
 
 		jda.addEventListener(new EventListener());
-		jda.getTextChannelsByName("log-bot", true).get(0).sendMessage("Bonjour ! Un total de " + Globals.getAbilities().size() + " capacités ont été chargées."
-				+ " " + Globals.getPlayers().size() + " joueurs ont rejoint le jeu !").complete();
+		jda.getTextChannelsByName("log-bot", true).get(0)
+				.sendMessage("Bonjour ! Un total de " + Globals.getAbilities().size() + " capacités ont été chargées."
+						+ " " + Globals.getPlayers().size() + " joueurs ont rejoint le jeu !")
+				.complete();
 
 		Scanner sc = new Scanner(System.in);
 
