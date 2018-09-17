@@ -1,24 +1,14 @@
 package fantasyBot.character;
 
-import java.util.ArrayList;
-
-import fantasyBot.player.Ability;
+import fantasyBot.player.MonsterStats;
 
 public class Monster extends Character {
 
-	public Monster(int id, String name, int maxHealth, int maxEnergy, ArrayList<Ability> abilityList) {
-		this.name = name;
-		this.hp = maxHealth;
-		this.maxHealthPoints = maxHealth;
-		this.energy = maxEnergy;
-		this.maxEnergy = maxEnergy;
-		this.abilities = abilityList;
-	}
 	
-	public Monster(Monster monster) {
+	public Monster(MonsterStats monster) {
 		this.name = monster.getName();
-		this.hp = monster.getMaxHealth();
-		this.maxHealthPoints = monster.getMaxHealth();
+		this.hp = monster.getMaxHP();
+		this.maxHP = monster.getMaxHP();
 		this.energy = monster.getMaxEnergy();
 		this.maxEnergy = monster.getMaxEnergy();
 		this.abilities = monster.getAbilities();

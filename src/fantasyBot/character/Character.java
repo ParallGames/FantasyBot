@@ -8,7 +8,7 @@ public abstract class Character {
 
 	protected String name;
 	protected int hp;
-	protected int maxHealthPoints;
+	protected int maxHP;
 	protected int energy;
 	protected int maxEnergy;
 	
@@ -22,8 +22,8 @@ public abstract class Character {
 		return hp;
 	}
 	
-	public int getMaxHealth() {
-		return maxHealthPoints;
+	public int getMaxHP() {
+		return maxHP;
 	}
 	
 	public int getEnergy() {

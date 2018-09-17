@@ -35,7 +35,7 @@ public class Fight {
 	public void player1Choice() {
 		if (player1 instanceof Player) {
 			String message = "C'est à " + player1.getName() + " de jouer !\n" + "Votre ennemie possède "
-					+ player2.getHP() + " points de vie sur " + player2.getMaxHealth() + ".\n"
+					+ player2.getHP() + " points de vie sur " + player2.getMaxHP() + ".\n"
 					+ "Vous possèder " + player1.getEnergy() + " points d'énergie.\n"
 					+ "Quelle attaque souhaitez-vous effectuer ?\n"
 					+ "------------------------------------------\n";
@@ -60,7 +60,7 @@ public class Fight {
 		if (player2 instanceof Player) {
 
 			String message = "C'est à " + player2.getName() + " de jouer !\n" + "Votre ennemie possède "
-					+ player1.getHP() + " points de vie sur " + player1.getMaxHealth() + ".\n"
+					+ player1.getHP() + " points de vie sur " + player1.getMaxHP() + ".\n"
 					+ "Vous possèder " + player2.getEnergy() + " points d'énergie.\n"
 					+ "Quelle attaque souhaitez-vous effectuer ?\n"
 					+ "------------------------------------------\n";
@@ -125,7 +125,7 @@ public class Fight {
 			if (player1 instanceof Player) {
 				((Player) player1).getPrivateChannel()
 				.sendMessage("Vous avez infligé " + ((Character) player1).getAbilities().get(abilityNumber).getDamage() + " à " + player2.getName()
-				+ " ! Il lui reste " + player2.getHP() + " sur " + player2.getMaxHealth()
+				+ " ! Il lui reste " + player2.getHP() + " sur " + player2.getMaxHP()
 				+ " !")
 				.complete();
 			}
@@ -133,7 +133,7 @@ public class Fight {
 			if(player2 instanceof Player) {
 				((Player) player2).getPrivateChannel()
 				.sendMessage(player1.getName() + " vous a infligé " + ((Character) player1).getAbilities().get(abilityNumber).getDamage()
-						+ " ! Il vous reste " + player2.getHP() + " PV sur " + player2.getMaxHealth()
+						+ " ! Il vous reste " + player2.getHP() + " PV sur " + player2.getMaxHP()
 						+ " !")
 				.complete();
 			}
@@ -170,7 +170,7 @@ public class Fight {
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel()
 				.sendMessage("Vous avez infligé " + ((Character) player2).getAbilities().get(abilityNumber).getDamage() + " à " + player1.getName()
-				+ " ! " + "Il lui reste " + player1.getHP() + " PV sur " + player1.getMaxHealth()
+				+ " ! " + "Il lui reste " + player1.getHP() + " PV sur " + player1.getMaxHP()
 				+ " !")
 				.complete();
 			}
@@ -178,7 +178,7 @@ public class Fight {
 			if(player1 instanceof Player) {
 				((Player) player1).getPrivateChannel()
 				.sendMessage(player2.getName() + " vous a infligé " + ((Character) player2).getAbilities().get(abilityNumber).getDamage()
-						+ " ! Il vous reste " + player1.getHP() + " PV sur " + player1.getMaxHealth()
+						+ " ! Il vous reste " + player1.getHP() + " PV sur " + player1.getMaxHP()
 						+ " !")
 				.complete();
 			}

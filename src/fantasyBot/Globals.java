@@ -55,8 +55,12 @@ public class Globals {
 		return null;
 	}
 	
-	public static Monster getMonsterByIndex(int index) {
+	/*public static Monster getMonsterByIndex(int index) {
 		return new Monster(monsters.get(index).createMonster());
+	}*/
+	
+	public static Monster createMonster(int index) {
+		return new Monster(monsters.get(index));
 	}
 	
 	public static void loadPlayers() {

@@ -77,7 +77,7 @@ public class EventListener extends ListenerAdapter {
 
 				if (ennemyPlayer == null) {
 					int randomIndex = RandMath.randInt(Globals.getNumberOfMonster());
-					ennemy = Globals.getMonsterByIndex(randomIndex);
+					ennemy = Globals.createMonster(randomIndex);
 				} else {
 					PlayerStats player2Stats = null;
 
@@ -129,7 +129,7 @@ public class EventListener extends ListenerAdapter {
 				if(fight.isTurnOfPlayer1()) {
 					fight.player1Turn(selection);
 				} else {
-					author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
+					author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !").complete();
 				}
 
 				return;
@@ -137,7 +137,7 @@ public class EventListener extends ListenerAdapter {
 				if(!fight.isTurnOfPlayer1()) {
 					fight.player2Turn(selection);
 				} else {
-					author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemie !").complete();
+					author.openPrivateChannel().complete().sendMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !").complete();
 				}
 				return;
 			}

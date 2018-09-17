@@ -2,8 +2,6 @@ package fantasyBot.player;
 
 import java.util.ArrayList;
 
-import fantasyBot.character.Monster;
-
 public class MonsterStats {
 	
 	private int id;
@@ -19,10 +17,6 @@ public class MonsterStats {
 		this.maxEnergy = maxEnergy;
 		this.abilities = abilities;
 	}
-	
-	public Monster createMonster() {
-		return new Monster(id, name, maxHp, maxEnergy, abilities);
-	}
 
 	public int getId() {
 		return id;
@@ -32,7 +26,7 @@ public class MonsterStats {
 		return name;
 	}
 
-	public int getMaxHp() {
+	public int getMaxHP() {
 		return maxHp;
 	}
 

@@ -12,7 +12,7 @@ public class Player extends Character {
 	public Player(PlayerStats stats) {
 		this.name = stats.getName();
 
-		this.maxHealthPoints = stats.getMaxHP();
+		this.maxHP = stats.getMaxHP();
 		this.hp = stats.getMaxHP();
 		this.energy = stats.getMaxEnergy();
 		this.maxEnergy = stats.getMaxEnergy();
