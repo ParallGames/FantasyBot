@@ -4,7 +4,6 @@ import fantasyBot.player.MonsterStats;
 
 public class Monster extends Character {
 
-	
 	public Monster(MonsterStats monster) {
 		this.name = monster.getName();
 		this.hp = monster.getMaxHP();

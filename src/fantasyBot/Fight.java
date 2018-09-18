@@ -160,21 +160,16 @@ public class Fight {
 
 	public void player1Win(int abilityNumber) {
 		if (player1 instanceof Player) {
-			((Player) player1).getPrivateChannel()
-					.sendMessage("Vous avez infligé " + ((Player) player1).getAbilities().get(abilityNumber).getDamage()
-							+ " à " + player2.getName() + " ! Il meurt sur ce coup !\n"
-							+ "Félicitation ! Vous remportez " + 20 + " d'exp !")
-					.complete();
+			((Player) player1).getPrivateChannel().sendMessage(MessageBuilder.createWinMessage((Player) player1,
+					player2, player1.getAbilities().get(abilityNumber))).complete();
 
 			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(20,
 					((Player) player1).getPrivateChannel());
 		}
 
 		if (player2 instanceof Player) {
-			((Player) player2)
-					.getPrivateChannel().sendMessage(player1.getName()
-							+ " vous inflige une attaque létale. Vous perdez.\nVous remportez " + 5 + " d'exp !")
-					.complete();
+			((Player) player2).getPrivateChannel().sendMessage(MessageBuilder.createDefeatMessage((Player) player2,
+					player1, player1.getAbilities().get(abilityNumber))).complete();
 
 			Globals.getPlayerByID(((Player) player2).getPlayerID()).getExperience().addExperience(5,
 					((Player) player2).getPrivateChannel());
@@ -185,21 +180,16 @@ public class Fight {
 
 	public void player2Win(int abilityNumber) {
 		if (player2 instanceof Player) {
-			((Player) player2).getPrivateChannel()
-					.sendMessage("Vous avez infligé " + ((Player) player2).getAbilities().get(abilityNumber).getDamage()
-							+ " à " + player1.getName() + " ! Il meurt sur ce coup !\n"
-							+ "Félicitation ! Vous remportez " + 20 + " d'exp !")
-					.complete();
+			((Player) player2).getPrivateChannel().sendMessage(MessageBuilder.createWinMessage((Player) player2,
+					player1, player2.getAbilities().get(abilityNumber))).complete();
 
 			Globals.getPlayerByID(((Player) player2).getPlayerID()).getExperience().addExperience(20,
 					((Player) player2).getPrivateChannel());
 		}
 
 		if (player1 instanceof Player) {
-			((Player) player1)
-					.getPrivateChannel().sendMessage(player2.getName()
-							+ " vous inflige une attaque létale. Vous perdez.\nVous remportez " + 5 + " d'exp !")
-					.complete();
+			((Player) player1).getPrivateChannel().sendMessage(MessageBuilder.createDefeatMessage((Player) player1,
+					player2, player2.getAbilities().get(abilityNumber))).complete();
 
 			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(5,
 					((Player) player1).getPrivateChannel());

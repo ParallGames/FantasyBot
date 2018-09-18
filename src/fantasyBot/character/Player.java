@@ -16,7 +16,7 @@ public class Player extends Character {
 		this.hp = stats.getMaxHP();
 		this.energy = stats.getMaxEnergy();
 		this.maxEnergy = stats.getMaxEnergy();
-		
+
 		this.abilities = stats.getAbilities();
 
 		this.channel = Main.getJda().getUserById(stats.getPlayerID()).openPrivateChannel().complete();

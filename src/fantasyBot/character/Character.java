@@ -11,21 +11,21 @@ public abstract class Character {
 	protected int maxHP;
 	protected int energy;
 	protected int maxEnergy;
-	
+
 	protected ArrayList<Ability> abilities;
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public int getHP() {
 		return hp;
 	}
-	
+
 	public int getMaxHP() {
 		return maxHP;
 	}
-	
+
 	public int getEnergy() {
 		return energy;
 	}
@@ -33,7 +33,7 @@ public abstract class Character {
 	public ArrayList<Ability> getAbilities() {
 		return abilities;
 	}
-	
+
 	public void recieveDamage(int damages) {
 		hp -= damages;
 	}

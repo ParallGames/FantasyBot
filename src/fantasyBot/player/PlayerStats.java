@@ -17,7 +17,7 @@ public class PlayerStats {
 	private String name;
 
 	private Experience xp;
-	
+
 	private ArrayList<Ability> abilities;
 
 	private int maxHP;
@@ -26,10 +26,10 @@ public class PlayerStats {
 	public PlayerStats(User player) {
 		playerID = player.getIdLong();
 		name = player.getName();
-		
+
 		abilities = new ArrayList<Ability>();
 		abilities.add(Globals.getAbilities().get(0));
-		abilities.add(Globals.getAbilities().get(1)); //Add somes abilities for test features
+		abilities.add(Globals.getAbilities().get(1)); // Add somes abilities for test features
 		abilities.add(Globals.getAbilities().get(2));
 
 		maxHP = 10;
@@ -46,17 +46,17 @@ public class PlayerStats {
 			name = Main.getJda().getUserById(playerID).getName();
 
 			xp = new Experience(input.readInt(), input.readInt());
-			
+
 			maxHP = input.readInt();
 			maxEnergy = input.readInt();
-			
+
 			abilities = new ArrayList<Ability>();
-			
+
 			int nmbOfAbility = input.readInt();
-			for(int i = 0; i < nmbOfAbility; i++) {
+			for (int i = 0; i < nmbOfAbility; i++) {
 				int nextAbilityID = input.readInt();
-				for(int j = 0; j < Globals.getAbilities().size(); j++) {
-					if(nextAbilityID == Globals.getAbilities().get(j).getId()) {
+				for (int j = 0; j < Globals.getAbilities().size(); j++) {
+					if (nextAbilityID == Globals.getAbilities().get(j).getId()) {
 						abilities.add(Globals.getAbilities().get(j));
 					}
 				}
@@ -70,7 +70,7 @@ public class PlayerStats {
 
 		maxHP = 10;
 	}
-	
+
 	public void save(String folder) {
 		File file = new File(folder + "/" + String.valueOf(playerID));
 
@@ -80,15 +80,15 @@ public class PlayerStats {
 			output.writeLong(playerID);
 			output.writeInt(xp.getLevel());
 			output.writeInt(xp.getLevelActualPoints());
-			
+
 			output.writeInt(maxHP);
 			output.writeInt(maxEnergy);
-			
-			//Saves the number of ability the player has
+
+			// Saves the number of ability the player has
 			output.writeInt(abilities.size());
-			
-			//Saves the id of the ability
-			for(int i = 0; i < abilities.size(); i++) {
+
+			// Saves the id of the ability
+			for (int i = 0; i < abilities.size(); i++) {
 				output.writeInt(abilities.get(i).getId());
 			}
 

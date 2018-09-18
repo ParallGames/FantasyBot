@@ -1,5 +1,6 @@
 package fantasyBot.player;
 
+import fantasyBot.utility.MessageBuilder;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 
 public class Experience {
@@ -16,6 +17,10 @@ public class Experience {
 
 	public void addExperience(int exp, PrivateChannel privateChannel) {
 		levelActualPoints += exp;
+
+		privateChannel.sendMessage(MessageBuilder.createXPGainMessage(exp, levelActualPoints, levelPointsMax, level))
+				.complete();
+
 		if (levelActualPoints >= levelPointsMax) {
 			levelUp(privateChannel);
 		}
@@ -26,7 +31,7 @@ public class Experience {
 		level++;
 		levelPointsMax = calculateLevelPointsMax(level);
 
-		privateChannel.sendMessage("Félicitation ! Vous êtes passé niveau " + level + " !").complete();
+		privateChannel.sendMessage(MessageBuilder.createLevelUpMessage(level)).complete();
 	}
 
 	public int calculateLevelPointsMax(int level) {
