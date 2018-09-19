@@ -49,8 +49,8 @@ public class MessageBuilder {
 
 		message.setTitle("C'est à vous d'attaquer");
 
-		String text = "Votre ennemi possède " + ennemy.getHP() + " points de vie sur " + ennemy.getMaxHP() + ".\n";
-		text += "Vous possèdez " + player.getEnergy() + " points d'énergie sur " + player.getMaxEnergy() + ".\n";
+		String text = "Votre ennemi possède **" + ennemy.getHP() + "** points de vie sur **" + ennemy.getMaxHP() + "**.\n";
+		text += "Vous possèdez **" + player.getEnergy() + "** points d'énergie sur **" + player.getMaxEnergy() + "**.\n";
 		text += "Quelle attaque souhaitez-vous effectuer ?\n";
 
 		message.setDescription(text);
@@ -58,8 +58,8 @@ public class MessageBuilder {
 		for (int i = 0; i < player.getAbilities().size(); i++) {
 			Ability ability = player.getAbilities().get(i);
 
-			String abilityText = "Coût : " + ability.getEnergyCost() + "\n";
-			abilityText += "Dégats : " + ability.getDamage() + "\n";
+			String abilityText = "Coût : **" + ability.getEnergyCost() + "**\n";
+			abilityText += "Dégats : **" + ability.getDamage() + "**\n";
 			abilityText += ability.description();
 
 			message.addField((i + 1) + ". " + ability.getName(), abilityText, false);
@@ -73,9 +73,9 @@ public class MessageBuilder {
 	public static MessageEmbed createDamageReceivedMessage(Player player, Character ennemy, Ability attack) {
 		EmbedBuilder message = new EmbedBuilder();
 
-		message.setTitle(ennemy.getName() + " vous a infligé " + attack.getDamage() + " dégats !");
+		message.setTitle(ennemy.getName() + " vous a infligé **" + attack.getDamage() + "** dégats !");
 
-		String text = "Il vous reste " + player.getHP() + " points de vie sur " + player.getMaxHP() + " !";
+		String text = "Il vous reste **" + player.getHP() + "** points de vie sur **" + player.getMaxHP() + "** !";
 		message.setDescription(text);
 
 		message.setColor(ENNEMY_COLOR);
@@ -86,9 +86,9 @@ public class MessageBuilder {
 	public static MessageEmbed createDamageDealtMessage(Player player, Character ennemy, Ability attack) {
 		EmbedBuilder message = new EmbedBuilder();
 
-		message.setTitle("Vous infligez " + attack.getDamage() + " dégats à " + ennemy.getName() + " !");
+		message.setTitle("Vous infligez **" + attack.getDamage() + "** dégats à " + ennemy.getName() + " !");
 
-		String text = "Il lui reste " + ennemy.getHP() + " points de vie sur " + ennemy.getMaxHP() + " !";
+		String text = "Il lui reste **" + ennemy.getHP() + "** points de vie sur **" + ennemy.getMaxHP() + "** !";
 		message.setDescription(text);
 
 		message.setColor(PLAYER_COLOR);
@@ -101,7 +101,7 @@ public class MessageBuilder {
 
 		message.setTitle("Victoire");
 
-		message.setDescription("Vous avez infligé " + attack.getDamage() + " dégats à " + ennemy.getName()
+		message.setDescription("Vous avez infligé **" + attack.getDamage() + "** dégats à " + ennemy.getName()
 				+ ". Il en meurt sur le coup.");
 
 		message.setColor(PLAYER_COLOR);
@@ -126,8 +126,8 @@ public class MessageBuilder {
 
 		message.setTitle("Expérience gagnée");
 
-		message.setDescription("Vous remportez " + xpGain + " points d'expérience.\n" + "Vous avez " + currentXP
-				+ " sur " + maxXP + " requis pour passer au niveau " + (level + 1) + ".");
+		message.setDescription("Vous remportez **" + xpGain + "** points d'expérience.\n" + "Vous avez **" + currentXP
+				+ "** sur **" + maxXP + "** requis pour passer au niveau **" + (level + 1) + "**.");
 
 		message.setColor(XP_COLOR);
 
@@ -139,7 +139,7 @@ public class MessageBuilder {
 
 		message.setTitle("Niveau gagné");
 
-		message.setDescription("Félicitation vous passez au niveau " + newLevel + ".");
+		message.setDescription("Félicitation vous passez au niveau **" + newLevel + "** !");
 
 		message.setColor(XP_COLOR);
 
