@@ -1,4 +1,6 @@
-package fantasyBot.inventory;
+package fantasyBot.item;
+
+import fantasyBot.exception.NegativeAmountOfItemException;
 
 public class Item {
 	
@@ -16,9 +18,9 @@ public class Item {
 		this.amount += amont;
 	}
 	
-	public void removeAmount(int amont) throws Exception {
+	public void removeAmount(int amont) throws NegativeAmountOfItemException {
 		if((this.amount - amont) <= 0) {
-			throw new Exception("You can't have a negative amount of a item !");
+			throw new NegativeAmountOfItemException();
 		} else {
 			this.amount -= amont;
 		}
