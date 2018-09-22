@@ -31,3 +31,10 @@ damage:2
 energy-cost:10
 description:Vous effectuez une attaque frontale rapide avec votre arme.
 attack-description:(ATTACKER_PLAYER_NAME) fonce contre (ATTACKED_PLAYER_NAME) en attaquant avec son arme !
+
+id:3
+name:puissance du vide
+damage:0
+energy-cost:150
+description:Vous crée une boule de vide qui immoblise votre adversaire durant 2 tours 
+attack-description:(ATTACKER_PLAYER_NAME) forme une boule de vide autours de(ATTACKED_PLAYER_NAME) en créant une brèche dans l’espace temps !
