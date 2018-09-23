@@ -31,6 +31,7 @@ public class PlayerStats {
 		abilities.add(Globals.getAbilities().get(0));
 		abilities.add(Globals.getAbilities().get(1)); // Add somes abilities for test features
 		abilities.add(Globals.getAbilities().get(2));
+		abilities.add(Globals.getAbilities().get(3));
 
 		maxHP = 10;
 		maxEnergy = 100;

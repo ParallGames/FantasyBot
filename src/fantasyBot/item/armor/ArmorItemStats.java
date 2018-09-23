@@ -1,6 +1,6 @@
-package fantasyBot.item;
+package fantasyBot.item.armor;
 
-import fantasyBot.item.armor.ArmorType;
+import fantasyBot.item.ItemStats;
 
 public class ArmorItemStats extends ItemStats{
 

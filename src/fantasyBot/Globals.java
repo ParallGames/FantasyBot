@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import fantasyBot.character.Monster;
+import fantasyBot.item.ItemStats;
 import fantasyBot.player.Ability;
 import fantasyBot.player.MonsterStats;
 import fantasyBot.player.PlayerStats;
@@ -16,6 +17,14 @@ public class Globals {
 	private static final String ABILITY_PATH = "resources/Abilities.txt";
 
 	private static final String MONSTERS_PATH = "resources/Monsters.txt";
+	
+	private static final String ARMOR_ITEMS_PATH = "resources/Items/ArmorItems.txt";
+	
+	private static final String WEAPON_ITEMS_PATH = "resources/Items/WeaponItems.txt";
+	
+	private static final String NON_USABLE_ITEM_PATH = "resources/Items/NonUsableItems.txt";
+	
+	private static final String CONSUMABLE_ITEM_PATH = "resources/Items/ConsumableItems.txt";
 
 	private static final String SEPARATOR = ":";
 
@@ -28,6 +37,8 @@ public class Globals {
 	private static final ArrayList<MonsterStats> monsters = new ArrayList<MonsterStats>();
 
 	private static final ArrayList<Ability> abilities = new ArrayList<Ability>();
+	
+	private static final ArrayList<ItemStats> items = new ArrayList<>();
 
 	/**
 	 * @param id the discord id of the player
@@ -108,6 +119,12 @@ public class Globals {
 		} finally {
 			scanner.close();
 		}
+	}
+	
+	public static void loadItems() throws FileNotFoundException {
+		File file = new File(ARMOR_ITEMS_PATH);
+		
+		Scanner scanner = new Scanner(file);
 	}
 
 	public static void loadMonsters() throws FileNotFoundException {

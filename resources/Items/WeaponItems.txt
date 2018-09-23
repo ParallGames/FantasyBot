@@ -1,0 +1,16 @@
+//   Weapon Item Format
+//-----------------------------
+//Format:
+//id:int
+//name:nameOfWeapon
+//description:descriptionOfWeapon
+//physicalDamage:int
+//magicDamage:int
+//abilityId:int
+
+id:0
+name:Epée de l'apprenti chevalier
+description:Epée distribuée à tous les apprentis chevalier. Elle est faites d'un métal basique et est plutôt court.
+physicalDamage:2
+magicDamage:0
+abilityId:-1

@@ -1,6 +1,5 @@
 package fantasyBot.item.consumable;
 
-import fantasyBot.item.ConsumbleItemStats;
 import fantasyBot.item.Item;
 
 public class ConsumableItem extends Item{

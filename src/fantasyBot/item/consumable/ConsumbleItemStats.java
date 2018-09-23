@@ -1,7 +1,6 @@
-package fantasyBot.item;
+package fantasyBot.item.consumable;
 
-import fantasyBot.item.consumable.ConsumableRegenerationType;
-import fantasyBot.item.consumable.ConsumableType;
+import fantasyBot.item.ItemStats;
 
 public class ConsumbleItemStats extends ItemStats{
 	
