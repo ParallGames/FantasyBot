@@ -26,9 +26,6 @@
 			<version>3.8.0_427</version>
 			<type>pom</type>
 		</dependency>
-
-
-
 	</dependencies>
 
 	<repositories>
