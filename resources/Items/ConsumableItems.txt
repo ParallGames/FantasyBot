@@ -1,0 +1,6 @@
+//      Consumable Items Liste
+//------------------------------------
+//Format:
+//id:int
+//name:nameOfWeapon
+//description:descriptionOfWeapon
