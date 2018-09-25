@@ -1,10 +1,15 @@
 package fantasyBot;
 
+import java.util.List;
+
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.PlayerStats;
 import fantasyBot.utility.MessageBuilder;
 import fantasyBot.utility.RandMath;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.priv.react.PrivateMessageReactionAddEvent;
@@ -108,6 +113,29 @@ public class EventListener extends ListenerAdapter {
 				Globals.getFightsInProgress().add(fight);
 			}
 		}
+		
+		if (message.substring(0, 4).equalsIgnoreCase("stop")){
+			User user = event.getAuthor();
+			List<Guild> listGuild = user.getMutualGuilds();
+			long id = user.getIdLong();
+			
+			for(int i = 0; i < listGuild.size(); i++) {
+				if(listGuild.get(i).getId().equals(Globals.ID_MAIN_SERVER)) {
+					Guild guild = listGuild.get(i);
+					Member member = guild.getMemberById(id);
+					List<Role> listRole = member.getRoles();
+					
+					for(int j = 0; j < listRole.size(); j++) {
+						if(listRole.get(j).getName().equals("Admin") && listRole.get(j).getId().equals(Globals.ID_ADMIN_ROLE_MAIN_SERVER)) {
+							Globals.savePlayers();
+							Main.getJda().getTextChannelsByName("log-bot", true).get(0).sendMessage("Au revoir !").complete();
+							Main.getJda().shutdown();
+						}
+					}
+				}
+			}
+		}
+		
 	}
 
 	@Override

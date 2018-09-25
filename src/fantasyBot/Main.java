@@ -50,19 +50,6 @@ public class Main {
 						+ " " + Globals.getPlayers().size() + " joueurs ont rejoint le jeu !")
 				.complete();
 
-		Scanner sc = new Scanner(System.in);
-
-		String text = "";
-		while (!text.equalsIgnoreCase("stop")) {
-			text = sc.next();
-		}
-		sc.close();
-
-		Globals.savePlayers();
-
-		jda.getTextChannelsByName("log-bot", true).get(0).sendMessage("Au revoir !").complete();
-
-		jda.shutdown();
 	}
 
 	public static JDA getJda() {

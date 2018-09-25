@@ -12,6 +12,11 @@ import fantasyBot.player.MonsterStats;
 import fantasyBot.player.PlayerStats;
 
 public class Globals {
+	
+	public static final String ID_MAIN_SERVER = "485136006866272276";
+	
+	public static final String ID_ADMIN_ROLE_MAIN_SERVER = "485136350891212811";
+	
 	private static final String SAVE_PATH = System.getProperty("user.home") + "/.fantasyBot";
 
 	private static final String ABILITY_PATH = "resources/Abilities.txt";
