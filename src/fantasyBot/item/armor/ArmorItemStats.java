@@ -5,7 +5,7 @@ import fantasyBot.item.ItemStats;
 public class ArmorItemStats extends ItemStats{
 
 	private ArmorType type;
-	private int physicalArmorValue;
+	private int physicalArmorValue; //1 = normal damage / 0.5 = increase damage / 2 = reduce damage
 	private int magicArmorValue;
 	
 	public ArmorItemStats(int id, String name, String description, ArmorType type, int physicalArmorValue, int magicArmorValue) {

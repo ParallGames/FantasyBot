@@ -1,0 +1,23 @@
+//	    ARMOR-LIST
+//---------------------
+//Format:
+//id:int
+//name:nameOfArmor
+//description:descriptionOfArmor
+//armorType:ENUM (BOOT,BOTTOM,TOP,HELMET)
+//physicalArmor:int //Armor info : 1 = normal damage / 0.5 = increase damage / 2 = reduce damage (attackDamage/physicalArmor = realAttackDamage)
+//magicalArmor:int
+
+id:1
+name:Casque de l'apprenti chevalier
+description:Un casque basique donné au apprenti chevalier. Fait d'un alliage simple.
+armorType:HELMET
+physicalArmor:1
+magicalArmor:1
+
+id:2
+name:Plastron de l'apprenti chevalier
+description:Un plastron basique donné au apprenti chevalier. Fait d'un alliage simple.
+armorType:HELMET
+physicalArmor:1
+magicalArmor:1

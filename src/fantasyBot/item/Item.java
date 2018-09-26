@@ -4,11 +4,13 @@ import fantasyBot.exception.NegativeAmountOfItemException;
 
 public class Item {
 	
+	private int id;
 	private int amount;
 	private String name;
 	private String description;
 
 	public Item(ItemStats itemStats, int amount) {
+		this.id = itemStats.getId();
 		this.amount = amount;
 		this.name = itemStats.getName();
 		this.description = itemStats.getDescription();
@@ -48,5 +50,9 @@ public class Item {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

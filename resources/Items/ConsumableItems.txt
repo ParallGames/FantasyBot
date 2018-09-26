@@ -2,5 +2,41 @@
 //------------------------------------
 //Format:
 //id:int
-//name:nameOfWeapon
-//description:descriptionOfWeapon
+//name:nameOfConsumable
+//description:descriptionOfCunsumable
+//type:typeOfHealth (LIFE or ENERGY)
+//regenerationType:typeOfRegeneration (DIRECT or PER_TURN)
+//valueOfRegeneration:intValue
+//turnOfRegeneration:intValue (0 if it's DIRECT)
+
+id:1
+name:Potion de vie basique
+description:Une potion qui régénère instantanément **VALUE_OF_REGENERATION_TOTAL** points de vie. Contructible à partir d'objet basique.
+type:LIFE
+regenerationType:DIRECT
+valueOfRegeneration:5
+turnOfRegeneration:1
+
+id:2
+name:Potion de énergie basique
+description:Une potion qui régénère instantanément **VALUE_OF_REGENERATION_TOTAL** points d'énergie. Contructible à partir d'objet basique.
+type:ENERGY
+regenerationType:DIRECT
+valueOfRegeneration:50
+turnOfRegeneration:1
+
+id:3
+name:Potion de vie regénérante basique
+description:Une potion qui régénère sur NUMBER_OF_TURN un total de **VALUE_OF_REGENERATION_TOTAL** points de vie. Contructible à partir d'objet basique.
+type:LIFE
+regenerationType:PER_TURN
+valueOfRegeneration:6
+turnOfRegeneration:3
+
+id:4
+name:Potion d'énergie regénérante basique
+description:Une potion qui régénère sur NUMBER_OF_TURN un total de **VALUE_OF_REGENERATION_TOTAL** points d'énergie. Contructible à partir d'objet basique.
+type:ENERGY
+regenerationType:PER_TURN
+valueOfRegeneration:6
+turnOfRegeneration:3
