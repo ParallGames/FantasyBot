@@ -49,8 +49,10 @@ public class MessageBuilder {
 
 		message.setTitle("C'est à vous d'attaquer");
 
-		String text = "Votre ennemi possède **" + ennemy.getHP() + "** points de vie sur **" + ennemy.getMaxHP() + "**.\n";
-		text += "Vous possèdez **" + player.getEnergy() + "** points d'énergie sur **" + player.getMaxEnergy() + "**.\n";
+		String text = "Votre ennemi possède **" + ennemy.getHP() + "** points de vie sur **" + ennemy.getMaxHP()
+				+ "**.\n";
+		text += "Vous possèdez **" + player.getEnergy() + "** points d'énergie sur **" + player.getMaxEnergy()
+				+ "**.\n";
 		text += "Quelle attaque souhaitez-vous effectuer ?\n";
 
 		message.setDescription(text);
