@@ -11,6 +11,6 @@
 id:0
 name:Epée de l'apprenti chevalier
 description:Epée distribuée à tous les apprentis chevalier. Elle est faites d'un alliage basique et est plutôt courte.
-physicalDamage:2
+physicalDamage:1
 magicDamage:0
 abilityId:-1

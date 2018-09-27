@@ -10,14 +10,28 @@
 
 id:1
 name:Casque de l'apprenti chevalier
-description:Un casque basique donné au apprenti chevalier. Fait d'un alliage simple.
+description:Un casque basique donné aux apprentis chevalier. Fait d'un alliage simple.
 armorType:HELMET
 physicalArmor:1
 magicalArmor:1
 
 id:2
 name:Plastron de l'apprenti chevalier
-description:Un plastron basique donné au apprenti chevalier. Fait d'un alliage simple.
+description:Un plastron basique donné aux apprentis chevalier. Fait d'un alliage simple.
 armorType:HELMET
+physicalArmor:1
+magicalArmor:1
+
+id:3
+name:Jambière de l'apprenti chevalier
+description:Des jambières basique distribué aux apprentis chevalier. Fait d'un alliage simple.
+armorType:BOTTOM
+physicalArmor:1
+magicalArmor:1
+
+id:4
+name:Botte de l'apprenti chevalier
+description:Des bottes basique distribué aux apprentis chevalier. Fait d'un alliage simple.
+armorType:BOOT
 physicalArmor:1
 magicalArmor:1
