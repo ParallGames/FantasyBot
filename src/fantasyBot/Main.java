@@ -53,7 +53,7 @@ public class Main {
 
 		jda.addEventListener(new EventListener());
 		
-		jda.getTextChannelsByName("log-bot", true).get(0)
+		jda.getTextChannelsByName("log-bot", true).get(0) //Strange bug here
 				.sendMessage("Bonjour ! Un total de " + Globals.getAbilities().size() + " capacités ont été chargées."
 						+ " " + Globals.getPlayers().size() + " joueurs ont rejoint le jeu !")
 				.complete();
