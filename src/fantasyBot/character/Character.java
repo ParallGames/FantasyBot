@@ -2,6 +2,8 @@ package fantasyBot.character;
 
 import java.util.ArrayList;
 
+import fantasyBot.item.Item;
+import fantasyBot.item.armor.ArmorItem;
 import fantasyBot.player.Ability;
 
 public abstract class Character {
@@ -13,6 +15,9 @@ public abstract class Character {
 	protected int maxEnergy;
 
 	protected ArrayList<Ability> abilities;
+	
+	protected ArrayList<Item> listeOfItems;
+	protected ArrayList<ArmorItem> equipedArmor;
 
 	public String getName() {
 		return name;
@@ -52,5 +57,21 @@ public abstract class Character {
 
 	public void setEnergy(int energy) {
 		this.energy = energy;
+	}
+
+	public ArrayList<ArmorItem> getEquipedArmor() {
+		return equipedArmor;
+	}
+
+	public void setEquipedArmor(ArrayList<ArmorItem> equipedArmor) {
+		this.equipedArmor = equipedArmor;
+	}
+
+	public ArrayList<Item> getListeOfItems() {
+		return listeOfItems;
+	}
+
+	public void setListeOfItems(ArrayList<Item> listeOfItems) {
+		this.listeOfItems = listeOfItems;
 	}
 }

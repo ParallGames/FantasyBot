@@ -1,18 +1,18 @@
 //      Non Usable Item List (Crafting)
 //-------------------------------------------
 //Format :
-//id:int
+//id:int 20'000 - 29'999
 //name:nameOfTheItem
 //description:descriptionOfTheItem
 
-id:0
+id:20000
 name:Baton
 description:Objet brute récupèré en donjon.
 
-id:1
+id:20001
 name:Bois utilisable
 description:Un matériel qui permet la construction de divers objets.
 
-id:2
+id:20002
 name:Pierre
 description:Objet récupèré en donjon qui sert à la construction d'objet.

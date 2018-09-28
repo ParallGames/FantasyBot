@@ -1,14 +1,14 @@
 //   Weapon Item Format
 //-----------------------------
 //Format:
-//id:int
+//id:int //30'000 - 39'999
 //name:nameOfWeapon
 //description:descriptionOfWeapon
 //physicalDamage:int
 //magicDamage:int
 //abilityId:int
 
-id:0
+id:30000
 name:Epée de l'apprenti chevalier
 description:Epée distribuée à tous les apprentis chevalier. Elle est faites d'un alliage basique et est plutôt courte.
 physicalDamage:1

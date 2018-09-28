@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 import fantasyBot.Globals;
 import fantasyBot.Main;
+import fantasyBot.item.Item;
+import fantasyBot.item.armor.ArmorItem;
+import fantasyBot.item.armor.ArmorItemStats;
+import jdk.nashorn.internal.objects.Global;
 import net.dv8tion.jda.core.entities.User;
 
 public class PlayerStats {
@@ -19,6 +23,9 @@ public class PlayerStats {
 	private Experience xp;
 
 	private ArrayList<Ability> abilities;
+	
+	private ArrayList<Item> items;
+	private ArrayList<ArmorItem> equipedArmorItem;
 
 	private int maxHP;
 	private int maxEnergy;
@@ -125,5 +132,21 @@ public class PlayerStats {
 
 	public ArrayList<Ability> getAbilities() {
 		return abilities;
+	}
+
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+	}
+
+	public ArrayList<ArmorItem> getEquipedArmorItem() {
+		return equipedArmorItem;
+	}
+
+	public void setEquipedArmorItem(ArrayList<ArmorItem> equipedArmorItem) {
+		this.equipedArmorItem = equipedArmorItem;
 	}
 }

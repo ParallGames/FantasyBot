@@ -1,7 +1,7 @@
 //      Consumable Items Liste
 //------------------------------------
 //Format:
-//id:int
+//id:int //10'000 - 19'999
 //name:nameOfConsumable
 //description:descriptionOfCunsumable
 //type:typeOfHealth (LIFE or ENERGY)
@@ -9,7 +9,7 @@
 //valueOfRegeneration:intValue
 //turnOfRegeneration:intValue (0 if it's DIRECT)
 
-id:1
+id:10000
 name:Potion de vie basique
 description:Une potion qui régénère instantanément **VALUE_OF_REGENERATION_TOTAL** points de vie. Contructible à partir d'objet basique.
 type:LIFE
@@ -17,7 +17,7 @@ regenerationType:DIRECT
 valueOfRegeneration:5
 turnOfRegeneration:1
 
-id:2
+id:10001
 name:Potion de énergie basique
 description:Une potion qui régénère instantanément **VALUE_OF_REGENERATION_TOTAL** points d'énergie. Contructible à partir d'objet basique.
 type:ENERGY
@@ -25,7 +25,7 @@ regenerationType:DIRECT
 valueOfRegeneration:50
 turnOfRegeneration:1
 
-id:3
+id:10002
 name:Potion de vie regénérante basique
 description:Une potion qui régénère sur NUMBER_OF_TURN un total de **VALUE_OF_REGENERATION_TOTAL** points de vie. Contructible à partir d'objet basique.
 type:LIFE
@@ -33,7 +33,7 @@ regenerationType:PER_TURN
 valueOfRegeneration:6
 turnOfRegeneration:3
 
-id:4
+id:10003
 name:Potion d'énergie regénérante basique
 description:Une potion qui régénère sur NUMBER_OF_TURN un total de **VALUE_OF_REGENERATION_TOTAL** points d'énergie. Contructible à partir d'objet basique.
 type:ENERGY

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import fantasyBot.character.Monster;
+import fantasyBot.item.Item;
 import fantasyBot.item.ItemStats;
 import fantasyBot.item.armor.ArmorItemStats;
 import fantasyBot.item.armor.ArmorType;
@@ -58,6 +59,8 @@ public class Globals {
 	private static final ArrayList<MonsterStats> monsters = new ArrayList<MonsterStats>();
 
 	private static final ArrayList<Ability> abilities = new ArrayList<Ability>();
+	
+	private static final ArrayList<ItemStats> allItems = new ArrayList<>();
 
 	private static final ArrayList<ItemStats> nonUsableItems = new ArrayList<>();
 
@@ -167,6 +170,7 @@ public class Globals {
 
 						ItemStats itemStats = new ItemStats(id, name, description);
 						nonUsableItems.add(itemStats);
+						allItems.add(itemStats);
 					}
 				}
 			}
@@ -199,6 +203,7 @@ public class Globals {
 						
 						WeaponItemStats itemStats = new WeaponItemStats(id, name, description, physicalDamage, magicDamage, ability);
 						weaponItemsStates.add(itemStats);
+						allItems.add(itemStats);
 					}
 				}
 			}
@@ -253,6 +258,7 @@ public class Globals {
 						ConsumbleItemStats itemStats = new ConsumbleItemStats(id, name, description, type, regenerationType,
 								valueRegeneration, turnOfRegeneration);
 						consumableItems.add(itemStats);
+						allItems.add(itemStats);
 					}
 				}
 			}
@@ -294,6 +300,7 @@ public class Globals {
 						
 						ArmorItemStats itemStats = new ArmorItemStats(id, name, description, type, physicalArmor, magicalArmor);
 						armorItemsStats.add(itemStats);
+						allItems.add(itemStats);
 					}
 				}
 			}
@@ -351,5 +358,9 @@ public class Globals {
 
 	public static int getNumberOfMonster() {
 		return monsters.size();
+	}
+
+	public static ArrayList<ItemStats> getAllitems() {
+		return allItems;
 	}
 }
