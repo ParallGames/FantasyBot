@@ -114,6 +114,48 @@ public class EventListener extends ListenerAdapter {
 			}
 		}
 		
+		if (message.substring(0, 4).equalsIgnoreCase("info")) {
+			String commande = message.substring(5);
+			
+			String[] str = commande.split(" ");
+			if(str[0].equals("best")) {
+				if(str[1].equals("players")) {
+					
+					int firstLevel = 0;
+					PlayerStats firstPlayer;
+					for(int i = 0; i < Globals.getPlayers().size(); i++) {
+						int actualLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+						if(actualLevel > firstLevel) {
+							firstLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+							firstPlayer = Globals.getPlayers().get(i);
+						}
+					}
+					
+					int secondLevel = 0;
+					PlayerStats secondPlayer;
+					
+					for(int i = 0; i < Globals.getPlayers().size(); i++) {
+						int actualLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+						if(actualLevel > secondLevel && actualLevel < firstLevel) {
+							secondLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+							secondPlayer = Globals.getPlayers().get(i);
+						}
+					}
+					
+					int thirdLevel = 0;
+					PlayerStats thirdPlayer;
+					
+					for(int i = 0; i < Globals.getPlayers().size(); i++) {
+						int actualLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+						if(actualLevel > thirdLevel && actualLevel < secondLevel) {
+							thirdLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+							thirdPlayer = Globals.getPlayers().get(i);
+						}
+					}
+				}
+			}
+		}
+		
 		if (message.substring(0, 4).equalsIgnoreCase("stop")){
 			User user = event.getAuthor();
 			List<Guild> listGuild = user.getMutualGuilds();
