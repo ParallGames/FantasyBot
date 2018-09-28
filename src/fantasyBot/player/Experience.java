@@ -33,6 +33,14 @@ public class Experience {
 
 		privateChannel.sendMessage(MessageBuilder.createLevelUpMessage(level)).complete();
 	}
+	
+	public int getTotalExpPoints() {
+		int totalXp = 0;
+		for(int i = 0; i < level; i++) {
+			totalXp += ((i + 1) * 50) - 50;
+		}
+		return totalXp + levelActualPoints;
+	}
 
 	public int calculateLevelPointsMax(int level) {
 		return level * 50;

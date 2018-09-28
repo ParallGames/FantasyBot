@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import fantasyBot.character.Monster;
-import fantasyBot.item.Item;
 import fantasyBot.item.ItemStats;
 import fantasyBot.item.armor.ArmorItemStats;
 import fantasyBot.item.armor.ArmorType;

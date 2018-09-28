@@ -1,5 +1,6 @@
 package fantasyBot;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import fantasyBot.character.Character;
@@ -11,6 +12,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.priv.react.PrivateMessageReactionAddEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -18,6 +20,46 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class EventListener extends ListenerAdapter {
 
 	public static final char PREFIX = '>';
+
+	@Override
+	public void onReady(ReadyEvent event) {
+
+		try {
+			Globals.loadAbilities();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		System.out.println("Capacités chargées !");
+
+		try {
+			Globals.loadItems();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+
+		System.out.println("Items Chargées !");
+
+		try {
+			Globals.loadMonsters();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		System.out.println("Monstres chargés !");
+
+		Globals.loadPlayers();
+
+		System.out.println("Joueurs Chargés !");
+
+		Main.getJda().getTextChannelsByName("log-bot", true).get(0)
+		.sendMessage("Bonjour ! Un total de " + Globals.getAbilities().size() + " capacités ont été chargées."
+				+ " " + Globals.getPlayers().size() + " joueurs ont rejoint le jeu !")
+		.complete();
+	}
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
@@ -47,8 +89,8 @@ public class EventListener extends ListenerAdapter {
 
 			if (messageSenderAsAlreadyAFight) {
 				author.openPrivateChannel().complete()
-						.sendMessage(MessageBuilder.createErrorMessage("Vous avez déjà un combats en cours !"))
-						.complete();
+				.sendMessage(MessageBuilder.createErrorMessage("Vous avez déjà un combats en cours !"))
+				.complete();
 			} else {
 				Fight fight = new Fight();
 
@@ -74,9 +116,9 @@ public class EventListener extends ListenerAdapter {
 				try {
 					if (message.substring(5).equalsIgnoreCase(author.getId())) {
 						author.openPrivateChannel().complete()
-								.sendMessage(MessageBuilder
-										.createErrorMessage("Vous ne pouvez pas vous affronter vous-même !"))
-								.complete();
+						.sendMessage(MessageBuilder
+								.createErrorMessage("Vous ne pouvez pas vous affronter vous-même !"))
+						.complete();
 						return;
 					} else {
 						ennemyPlayer = Main.getJda().getUserById(message.substring(5));
@@ -113,60 +155,72 @@ public class EventListener extends ListenerAdapter {
 				Globals.getFightsInProgress().add(fight);
 			}
 		}
-		
+
 		if (message.substring(0, 4).equalsIgnoreCase("info")) {
 			String commande = message.substring(5);
-			
+
 			String[] str = commande.split(" ");
 			if(str[0].equals("best")) {
 				if(str[1].equals("players")) {
-					
-					int firstLevel = 0;
-					PlayerStats firstPlayer;
+
+
+					int firstMaxPoint = 0;
+					PlayerStats firstPlayer = null;
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
-						int actualLevel = Globals.getPlayers().get(i).getExperience().getLevel();
-						if(actualLevel > firstLevel) {
-							firstLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
+						
+						if(actualPoints > firstMaxPoint) {
+							firstMaxPoint = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							firstPlayer = Globals.getPlayers().get(i);
 						}
 					}
-					
-					int secondLevel = 0;
-					PlayerStats secondPlayer;
-					
+
+					int secondMaxPoints = 0;
+					PlayerStats secondPlayer = null;
+
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
-						int actualLevel = Globals.getPlayers().get(i).getExperience().getLevel();
-						if(actualLevel > secondLevel && actualLevel < firstLevel) {
-							secondLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
+						
+						if(actualPoints > secondMaxPoints && actualPoints < firstMaxPoint) {
+							secondMaxPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							secondPlayer = Globals.getPlayers().get(i);
 						}
 					}
-					
-					int thirdLevel = 0;
-					PlayerStats thirdPlayer;
-					
+
+					int thirdMaxPoints = 0;
+					PlayerStats thirdPlayer = null;
+
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
-						int actualLevel = Globals.getPlayers().get(i).getExperience().getLevel();
-						if(actualLevel > thirdLevel && actualLevel < secondLevel) {
-							thirdLevel = Globals.getPlayers().get(i).getExperience().getLevel();
+						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
+						
+						if(actualPoints < thirdMaxPoints && actualPoints > secondMaxPoints) {
+							thirdMaxPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							thirdPlayer = Globals.getPlayers().get(i);
 						}
 					}
+
+					if(firstPlayer != null && secondPlayer != null && thirdPlayer != null) {
+						event.getTextChannel().sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+					}else {
+						event.getTextChannel().sendMessage(MessageBuilder.createErrorMessage(
+								"Un classement est impossible à mettre en place avec les données actuel")).complete();
+					}
+
 				}
 			}
 		}
-		
+
 		if (message.substring(0, 4).equalsIgnoreCase("stop")){
 			User user = event.getAuthor();
 			List<Guild> listGuild = user.getMutualGuilds();
 			long id = user.getIdLong();
-			
+
 			for(int i = 0; i < listGuild.size(); i++) {
 				if(listGuild.get(i).getId().equals(Globals.ID_MAIN_SERVER)) {
 					Guild guild = listGuild.get(i);
 					Member member = guild.getMemberById(id);
 					List<Role> listRole = member.getRoles();
-					
+
 					for(int j = 0; j < listRole.size(); j++) {
 						if(listRole.get(j).getName().equals("Admin") && listRole.get(j).getId().equals(Globals.ID_ADMIN_ROLE_MAIN_SERVER)) {
 							Globals.savePlayers();
@@ -177,7 +231,7 @@ public class EventListener extends ListenerAdapter {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -207,7 +261,7 @@ public class EventListener extends ListenerAdapter {
 				} else {
 					author.openPrivateChannel().complete().sendMessage(MessageBuilder
 							.createErrorMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !"))
-							.complete();
+					.complete();
 				}
 
 				return;
@@ -217,7 +271,7 @@ public class EventListener extends ListenerAdapter {
 				} else {
 					author.openPrivateChannel().complete().sendMessage(MessageBuilder
 							.createErrorMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !"))
-							.complete();
+					.complete();
 				}
 				return;
 			}

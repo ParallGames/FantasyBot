@@ -12,8 +12,6 @@ import fantasyBot.Globals;
 import fantasyBot.Main;
 import fantasyBot.item.Item;
 import fantasyBot.item.armor.ArmorItem;
-import fantasyBot.item.armor.ArmorItemStats;
-import jdk.nashorn.internal.objects.Global;
 import net.dv8tion.jda.core.entities.User;
 
 public class PlayerStats {
@@ -78,7 +76,7 @@ public class PlayerStats {
 
 		maxHP = 10;
 	}
-
+	
 	public void save(String folder) {
 		File file = new File(folder + "/" + String.valueOf(playerID));
 

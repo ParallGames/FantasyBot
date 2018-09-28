@@ -5,6 +5,7 @@ import java.awt.Color;
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.Ability;
+import fantasyBot.player.PlayerStats;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
@@ -145,6 +146,25 @@ public class MessageBuilder {
 
 		message.setColor(XP_COLOR);
 
+		return message.build();
+	}
+	
+	public static MessageEmbed createTop3Message(PlayerStats first, PlayerStats second, PlayerStats third) {
+		EmbedBuilder message = new EmbedBuilder();
+		
+		message.setColor(Color.YELLOW);
+		
+		message.setTitle("Les 3 meilleurs joueurs du jeu :");
+		
+		message.addField("Meilleur joueur : **" + first.getName() + "**",
+				"**" + first.getName() + "** est niveau **" + first.getExperience().getLevel() + "** avec un total de **" + first.getExperience().getTotalExpPoints() + "** points d'Exp !", false);
+		
+		message.addField("Deuxième meilleur joueur : **" + second.getName() + "**",
+				"**" + second.getName() + "** est niveau **" + second.getExperience().getLevel() + "** avec un total de **" + second.getExperience().getTotalExpPoints() + "** points d'Exp !", false);
+		
+		message.addField("Troisième meilleur joueur : **" + third.getName() + "**",
+				"**" + third.getName() + "** est niveau **" + third.getExperience().getLevel() + "** avec un total de **" + third.getExperience().getTotalExpPoints() + "** points d'Exp !", false);
+		
 		return message.build();
 	}
 }

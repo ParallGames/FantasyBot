@@ -22,7 +22,7 @@ abilityId4:-1
 
 id:1
 name:Dragon
-health:20
+health:15
 energy:50
 abilityId1:0
 abilityId2:1
