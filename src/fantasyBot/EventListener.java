@@ -193,7 +193,7 @@ public class EventListener extends ListenerAdapter {
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
 						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 						
-						if(actualPoints < thirdMaxPoints && actualPoints > secondMaxPoints) {
+						if(actualPoints > thirdMaxPoints && actualPoints < secondMaxPoints) {
 							thirdMaxPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							thirdPlayer = Globals.getPlayers().get(i);
 						}
