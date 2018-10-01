@@ -1,8 +1,11 @@
 package fantasyBot;
 
+import java.util.ArrayList;
+
 import fantasyBot.character.Character;
 import fantasyBot.character.Monster;
 import fantasyBot.character.Player;
+import fantasyBot.player.Ability;
 import fantasyBot.utility.MessageBuilder;
 import fantasyBot.utility.RandMath;
 import net.dv8tion.jda.core.entities.Message;
@@ -19,14 +22,14 @@ public class Fight {
 
 		if (player1 instanceof Player) {
 			((Player) player1).getPrivateChannel()
-					.sendMessage(MessageBuilder.createCombatIntroductionMessage((Player) player1, player2, player1))
-					.complete();
+			.sendMessage(MessageBuilder.createCombatIntroductionMessage((Player) player1, player2, player1))
+			.complete();
 		}
 
 		if (player2 instanceof Player) {
 			((Player) player2).getPrivateChannel()
-					.sendMessage(MessageBuilder.createCombatIntroductionMessage((Player) player2, player1, player2))
-					.complete();
+			.sendMessage(MessageBuilder.createCombatIntroductionMessage((Player) player2, player1, player2))
+			.complete();
 		}
 
 		turnOfPlayer1 = true;
@@ -81,14 +84,26 @@ public class Fight {
 		if (player1 instanceof Player) {
 			if (player1.getAbilities().get(abilityNumber).getEnergyCost() > player1.getEnergy()) {
 				((Player) player1).getPrivateChannel()
-						.sendMessage(MessageBuilder.createErrorMessage("Vous ne possèdez pas assez d'énergie !"))
-						.complete();
+				.sendMessage(MessageBuilder.createErrorMessage("Vous ne possèdez pas assez d'énergie !"))
+				.complete();
 				return;
 			}
 		} else {
-			// TODO prevent infinite loop
-			while (player1.getAbilities().get(abilityNumber).getEnergyCost() > player1.getEnergy()) {
-				abilityNumber = RandMath.randInt(player1.getAbilities().size());
+			ArrayList<Ability> usableAbility = new ArrayList<>();
+
+			for(int i = 0; i < player1.getAbilities().size(); i++) {
+				if(player1.getAbilities().get(i).getEnergyCost() <= player1.getEnergy()) {
+					usableAbility.add(player1.getAbilities().get(i));
+				}
+			}
+
+			abilityNumber = RandMath.randInt(usableAbility.size());
+			
+			for(int i = 0; i < player1.getAbilities().size(); i++) {
+				if(player1.getAbilities().get(i).getId() == usableAbility.get(abilityNumber).getId()) {
+					abilityNumber = i - 1;
+					break;
+				}
 			}
 		}
 
@@ -102,14 +117,14 @@ public class Fight {
 			if (player1 instanceof Player) {
 				((Player) player1).getPrivateChannel().sendMessage(MessageBuilder
 						.createDamageDealtMessage((Player) player1, player2, player1.getAbilities().get(abilityNumber)))
-						.complete();
+				.complete();
 			}
 
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel()
-						.sendMessage(MessageBuilder.createDamageReceivedMessage((Player) player2, player1,
-								player1.getAbilities().get(abilityNumber)))
-						.complete();
+				.sendMessage(MessageBuilder.createDamageReceivedMessage((Player) player2, player1,
+						player1.getAbilities().get(abilityNumber)))
+				.complete();
 			}
 		}
 
@@ -123,14 +138,26 @@ public class Fight {
 		if (player2 instanceof Player) {
 			if (player2.getAbilities().get(abilityNumber).getEnergyCost() > player2.getEnergy()) {
 				((Player) player2).getPrivateChannel()
-						.sendMessage(MessageBuilder.createErrorMessage("Vous ne possèdez pas assez d'énergie !"))
-						.complete();
+				.sendMessage(MessageBuilder.createErrorMessage("Vous ne possèdez pas assez d'énergie !"))
+				.complete();
 				return;
 			}
 		} else {
-			// TODO prevent infinite loop
-			while (player2.getAbilities().get(abilityNumber).getEnergyCost() > player2.getEnergy()) {
-				abilityNumber = RandMath.randInt(player2.getAbilities().size());
+			ArrayList<Ability> usableAbility = new ArrayList<>();
+
+			for(int i = 0; i < player2.getAbilities().size(); i++) {
+				if(player2.getAbilities().get(i).getEnergyCost() <= player2.getEnergy()) {
+					usableAbility.add(player2.getAbilities().get(i));
+				}
+			}
+
+			abilityNumber = RandMath.randInt(usableAbility.size());
+			
+			for(int i = 0; i < player2.getAbilities().size(); i++) {
+				if(player2.getAbilities().get(i).getId() == usableAbility.get(abilityNumber).getId()) {
+					abilityNumber = i - 1;
+					break;
+				}
 			}
 		}
 
@@ -144,14 +171,14 @@ public class Fight {
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel().sendMessage(MessageBuilder
 						.createDamageDealtMessage((Player) player2, player1, player2.getAbilities().get(abilityNumber)))
-						.complete();
+				.complete();
 			}
 
 			if (player1 instanceof Player) {
 				((Player) player1).getPrivateChannel()
-						.sendMessage(MessageBuilder.createDamageReceivedMessage((Player) player1, player2,
-								player2.getAbilities().get(abilityNumber)))
-						.complete();
+				.sendMessage(MessageBuilder.createDamageReceivedMessage((Player) player1, player2,
+						player2.getAbilities().get(abilityNumber)))
+				.complete();
 			}
 		}
 		turnOfPlayer1 = true;

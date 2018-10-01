@@ -3,8 +3,6 @@ package fantasyBot;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import com.sun.xml.internal.ws.wsdl.writer.document.OpenAtts;
-
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.PlayerStats;
