@@ -3,6 +3,8 @@ package fantasyBot;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import com.sun.xml.internal.ws.wsdl.writer.document.OpenAtts;
+
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.PlayerStats;
@@ -10,6 +12,7 @@ import fantasyBot.utility.MessageBuilder;
 import fantasyBot.utility.RandMath;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.ReadyEvent;
@@ -200,10 +203,28 @@ public class EventListener extends ListenerAdapter {
 					}
 
 					if(firstPlayer != null && secondPlayer != null && thirdPlayer != null) {
-						event.getTextChannel().sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+						if(event.getTextChannel() == null) {
+							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
+							privateChannel.sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+						}else if (!event.getTextChannel().canTalk()){
+							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
+							privateChannel.sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+						}else {
+							event.getTextChannel().sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+						}
 					}else {
-						event.getTextChannel().sendMessage(MessageBuilder.createErrorMessage(
+						if(event.getTextChannel() == null) {
+							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
+							privateChannel.sendMessage(MessageBuilder.createErrorMessage(
 								"Un classement est impossible à mettre en place avec les données actuel")).complete();
+						}else if(!event.getTextChannel().canTalk()) {
+							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
+							privateChannel.sendMessage(MessageBuilder.createErrorMessage(
+								"Un classement est impossible à mettre en place avec les données actuel")).complete();
+						}else {
+							event.getTextChannel().sendMessage(MessageBuilder.createErrorMessage(
+									"Un classement est impossible à mettre en place avec les données actuel")).complete();
+						}
 					}
 
 				}
