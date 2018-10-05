@@ -2,7 +2,6 @@ package fantasyBot;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
 import fantasyBot.player.PlayerStats;
@@ -10,6 +9,7 @@ import fantasyBot.utility.MessageBuilder;
 import fantasyBot.utility.RandMath;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.User;
@@ -64,9 +64,13 @@ public class EventListener extends ListenerAdapter {
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		String message = event.getMessage().getContentRaw();
 		User author = event.getAuthor();
-
+		if(author.isBot()) {
+			return;
+		}
+		
+		String message = event.getMessage().getContentRaw();
+		
 		if (message.length() == 0 || message.charAt(0) != PREFIX) {
 			return;
 		}
@@ -75,7 +79,7 @@ public class EventListener extends ListenerAdapter {
 
 		if (message.substring(0, 4).equalsIgnoreCase("play")) {
 			try {
-				event.getMessage().delete().complete();
+				event.getMessage().delete().queue();
 			} catch (Exception e) {
 				// Do nothing, that's not an issue.
 			}
@@ -91,7 +95,7 @@ public class EventListener extends ListenerAdapter {
 			if (messageSenderAsAlreadyAFight) {
 				author.openPrivateChannel().complete()
 				.sendMessage(MessageBuilder.createErrorMessage("Vous avez déjà un combats en cours !"))
-				.complete();
+				.queue();
 			} else {
 				Fight fight = new Fight();
 
@@ -119,7 +123,7 @@ public class EventListener extends ListenerAdapter {
 						author.openPrivateChannel().complete()
 						.sendMessage(MessageBuilder
 								.createErrorMessage("Vous ne pouvez pas vous affronter vous-même !"))
-						.complete();
+						.queue();
 						return;
 					} else {
 						ennemyPlayer = Main.getJda().getUserById(message.substring(5));
@@ -151,8 +155,22 @@ public class EventListener extends ListenerAdapter {
 					ennemy = new Player(player2Stats);
 				}
 
-				fight.runFight(player, ennemy);
+				
+				fight.constructFight(player, ennemy);
 
+				if(fight.getEnnemy() instanceof Player) {
+					fight.setNeedValidationOfPlayer2(true);
+					Message messageToAssigne = ((Player) ennemy).getPrivateChannel().sendMessage(
+							MessageBuilder.createQuestionValidationFights((Player)player)).complete();
+					messageToAssigne.addReaction("✅").queue();
+					messageToAssigne.addReaction("❌").queue();
+					
+					((Player) player).getPrivateChannel().sendMessage(MessageBuilder.createWaitValidationMessage((Player) ennemy)).queue();
+				}else {
+					fight.setNeedValidationOfPlayer2(false);
+					fight.fightAccepted();
+				}
+				
 				Globals.getFightsInProgress().add(fight);
 			}
 		}
@@ -169,7 +187,7 @@ public class EventListener extends ListenerAdapter {
 					PlayerStats firstPlayer = null;
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
 						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
-						
+
 						if(actualPoints > firstMaxPoint) {
 							firstMaxPoint = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							firstPlayer = Globals.getPlayers().get(i);
@@ -181,7 +199,7 @@ public class EventListener extends ListenerAdapter {
 
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
 						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
-						
+
 						if(actualPoints > secondMaxPoints && actualPoints < firstMaxPoint) {
 							secondMaxPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							secondPlayer = Globals.getPlayers().get(i);
@@ -193,7 +211,7 @@ public class EventListener extends ListenerAdapter {
 
 					for(int i = 0; i < Globals.getPlayers().size(); i++) {
 						int actualPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
-						
+
 						if(actualPoints > thirdMaxPoints && actualPoints < secondMaxPoints) {
 							thirdMaxPoints = Globals.getPlayers().get(i).getExperience().getTotalExpPoints();
 							thirdPlayer = Globals.getPlayers().get(i);
@@ -203,25 +221,25 @@ public class EventListener extends ListenerAdapter {
 					if(firstPlayer != null && secondPlayer != null && thirdPlayer != null) {
 						if(event.getTextChannel() == null) {
 							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
-							privateChannel.sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+							privateChannel.sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).queue();
 						}else if (!event.getTextChannel().canTalk()){
 							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
-							privateChannel.sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+							privateChannel.sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).queue();
 						}else {
-							event.getTextChannel().sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).complete();
+							event.getTextChannel().sendMessage(MessageBuilder.createTop3Message(firstPlayer, secondPlayer, thirdPlayer)).queue();
 						}
 					}else {
 						if(event.getTextChannel() == null) {
 							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
 							privateChannel.sendMessage(MessageBuilder.createErrorMessage(
-								"Un classement est impossible à mettre en place avec les données actuel")).complete();
+									"Un classement est impossible à mettre en place avec les données actuel")).queue();
 						}else if(!event.getTextChannel().canTalk()) {
 							PrivateChannel privateChannel = event.getAuthor().openPrivateChannel().complete();
 							privateChannel.sendMessage(MessageBuilder.createErrorMessage(
-								"Un classement est impossible à mettre en place avec les données actuel")).complete();
+									"Un classement est impossible à mettre en place avec les données actuel")).queue();
 						}else {
 							event.getTextChannel().sendMessage(MessageBuilder.createErrorMessage(
-									"Un classement est impossible à mettre en place avec les données actuel")).complete();
+									"Un classement est impossible à mettre en place avec les données actuel")).queue();
 						}
 					}
 
@@ -250,14 +268,29 @@ public class EventListener extends ListenerAdapter {
 				}
 			}
 		}
-
 	}
 
 	@Override
 	public void onPrivateMessageReactionAdd(PrivateMessageReactionAddEvent event) {
 		User author = event.getUser();
-
+		if(author.isBot()) {
+			return;
+		}
 		String emote = event.getReaction().getReactionEmote().getName();
+
+		for (Fight fight : Globals.getFightsInProgress()) {
+			if(fight.getEnnemy().getName().equals(author.getName())) {
+				if(fight.isNeedValidationOfPlayer2()) {
+					if(emote.equals("✅")) {
+						fight.fightAccepted();
+						return;
+					} else if (emote.equals("❌")) {
+						fight.fightDeclined();
+						return;
+					}
+				}
+			}
+		}
 
 		int selection = 0;
 
@@ -280,7 +313,7 @@ public class EventListener extends ListenerAdapter {
 				} else {
 					author.openPrivateChannel().complete().sendMessage(MessageBuilder
 							.createErrorMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !"))
-					.complete();
+					.queue();
 				}
 
 				return;
@@ -290,7 +323,7 @@ public class EventListener extends ListenerAdapter {
 				} else {
 					author.openPrivateChannel().complete().sendMessage(MessageBuilder
 							.createErrorMessage("Vous ne pouvez pas attaquer ! C'est le tour de votre ennemi !"))
-					.complete();
+					.queue();
 				}
 				return;
 			}

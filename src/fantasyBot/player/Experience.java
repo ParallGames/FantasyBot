@@ -19,7 +19,7 @@ public class Experience {
 		levelActualPoints += exp;
 
 		privateChannel.sendMessage(MessageBuilder.createXPGainMessage(exp, levelActualPoints, levelPointsMax, level))
-				.complete();
+				.queue();
 
 		if (levelActualPoints >= levelPointsMax) {
 			levelUp(privateChannel);
@@ -31,7 +31,7 @@ public class Experience {
 		level++;
 		levelPointsMax = calculateLevelPointsMax(level);
 
-		privateChannel.sendMessage(MessageBuilder.createLevelUpMessage(level)).complete();
+		privateChannel.sendMessage(MessageBuilder.createLevelUpMessage(level)).queue();
 	}
 	
 	public int getTotalExpPoints() {

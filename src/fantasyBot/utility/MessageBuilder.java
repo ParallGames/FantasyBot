@@ -25,6 +25,46 @@ public class MessageBuilder {
 
 		return message.build();
 	}
+	
+	public static MessageEmbed createQuestionValidationFights(Player player) {
+		EmbedBuilder message = new EmbedBuilder();
+		message.setTitle(player.getName() + "vous défie en duel !");
+		
+		message.setDescription("Acceptez-vous le duel ?");
+		
+		return message.build();
+	}
+	
+	public static MessageEmbed createWaitValidationMessage(Player ennemy) {
+		EmbedBuilder message = new EmbedBuilder();
+		message.setTitle("Attente d'acceptation du match");
+		
+		message.setDescription("Attente de validation du duel avec " + ennemy.getName());
+		
+		return message.build();
+	}
+	
+	public static MessageEmbed createRefuseFight(Player ennemy) {
+		EmbedBuilder message = new EmbedBuilder();
+		message.setTitle("Match refusé !");
+		
+		message.setDescription(ennemy.getName() + " a refusé le combat !");
+		
+		message.setColor(ENNEMY_COLOR);
+		
+		return message.build();
+	}
+	
+	public static MessageEmbed createConfirmationMessage(Player ennemy) {
+		EmbedBuilder message = new EmbedBuilder();
+		message.setTitle("Confirmation");
+		
+		message.setDescription("La proposition de duel contre " + ennemy.getName() + " a bien été décliné !");
+		
+		message.setColor(Color.GREEN);
+		
+		return message.build();
+	}
 
 	public static MessageEmbed createCombatIntroductionMessage(Player player, Character ennemy, Character starter) {
 		EmbedBuilder message = new EmbedBuilder();

@@ -15,11 +15,10 @@ public class Fight {
 	private Character player1;
 	private Character player2;
 	private boolean turnOfPlayer1;
+	private boolean needValidationOfPlayer2;
 
-	public void runFight(Character player1, Character player2) {
-		this.player1 = player1;
-		this.player2 = player2;
-
+	
+	public void fightAccepted() {
 		if (player1 instanceof Player) {
 			((Player) player1).getPrivateChannel()
 			.sendMessage(MessageBuilder.createCombatIntroductionMessage((Player) player1, player2, player1))
@@ -34,6 +33,17 @@ public class Fight {
 
 		turnOfPlayer1 = true;
 		player1Choice();
+	}
+	
+	public void fightDeclined() {
+		((Player) player1).getPrivateChannel().sendMessage(MessageBuilder.createRefuseFight((Player) player2)).queue();
+		((Player) player2).getPrivateChannel().sendMessage(MessageBuilder.createConfirmationMessage((Player) player2)).queue();
+		Globals.getFightsInProgress().remove(this);
+	}
+	
+	public void constructFight(Character player1, Character player2) {
+		this.player1 = player1;
+		this.player2 = player2;
 	}
 
 	public void player1Choice() {
@@ -62,19 +72,19 @@ public class Fight {
 
 	public void assigneReaction(Message mess, Player player) {
 		if (player.getAbilities().size() >= 1) {
-			mess.addReaction("1⃣").complete();
+			mess.addReaction("1⃣").queue();
 		}
 
 		if (player.getAbilities().size() >= 2) {
-			mess.addReaction("2⃣").complete();
+			mess.addReaction("2⃣").queue();
 		}
 
 		if (player.getAbilities().size() >= 3) {
-			mess.addReaction("3⃣").complete();
+			mess.addReaction("3⃣").queue();
 		}
 
 		if (player.getAbilities().size() >= 4) {
-			mess.addReaction("4⃣").complete();
+			mess.addReaction("4⃣").queue();
 		}
 	}
 
@@ -85,7 +95,7 @@ public class Fight {
 			if (player1.getAbilities().get(abilityNumber).getEnergyCost() > player1.getEnergy()) {
 				((Player) player1).getPrivateChannel()
 				.sendMessage(MessageBuilder.createErrorMessage("Vous ne possèdez pas assez d'énergie !"))
-				.complete();
+				.queue();
 				return;
 			}
 		} else {
@@ -117,14 +127,14 @@ public class Fight {
 			if (player1 instanceof Player) {
 				((Player) player1).getPrivateChannel().sendMessage(MessageBuilder
 						.createDamageDealtMessage((Player) player1, player2, player1.getAbilities().get(abilityNumber)))
-				.complete();
+				.queue();
 			}
 
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel()
 				.sendMessage(MessageBuilder.createDamageReceivedMessage((Player) player2, player1,
 						player1.getAbilities().get(abilityNumber)))
-				.complete();
+				.queue();
 			}
 		}
 
@@ -139,7 +149,7 @@ public class Fight {
 			if (player2.getAbilities().get(abilityNumber).getEnergyCost() > player2.getEnergy()) {
 				((Player) player2).getPrivateChannel()
 				.sendMessage(MessageBuilder.createErrorMessage("Vous ne possèdez pas assez d'énergie !"))
-				.complete();
+				.queue();
 				return;
 			}
 		} else {
@@ -155,7 +165,7 @@ public class Fight {
 			
 			for(int i = 0; i < player2.getAbilities().size(); i++) {
 				if(player2.getAbilities().get(i).getId() == usableAbility.get(abilityNumber).getId()) {
-					abilityNumber = i - 1;
+					abilityNumber = i;
 					break;
 				}
 			}
@@ -171,14 +181,14 @@ public class Fight {
 			if (player2 instanceof Player) {
 				((Player) player2).getPrivateChannel().sendMessage(MessageBuilder
 						.createDamageDealtMessage((Player) player2, player1, player2.getAbilities().get(abilityNumber)))
-				.complete();
+				.queue();
 			}
 
 			if (player1 instanceof Player) {
 				((Player) player1).getPrivateChannel()
 				.sendMessage(MessageBuilder.createDamageReceivedMessage((Player) player1, player2,
 						player2.getAbilities().get(abilityNumber)))
-				.complete();
+				.queue();
 			}
 		}
 		turnOfPlayer1 = true;
@@ -188,7 +198,7 @@ public class Fight {
 	public void player1Win(int abilityNumber) {
 		if (player1 instanceof Player) {
 			((Player) player1).getPrivateChannel().sendMessage(MessageBuilder.createWinMessage((Player) player1,
-					player2, player1.getAbilities().get(abilityNumber))).complete();
+					player2, player1.getAbilities().get(abilityNumber))).queue();
 
 			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(20,
 					((Player) player1).getPrivateChannel());
@@ -196,7 +206,7 @@ public class Fight {
 
 		if (player2 instanceof Player) {
 			((Player) player2).getPrivateChannel().sendMessage(MessageBuilder.createDefeatMessage((Player) player2,
-					player1, player1.getAbilities().get(abilityNumber))).complete();
+					player1, player1.getAbilities().get(abilityNumber))).queue();
 
 			Globals.getPlayerByID(((Player) player2).getPlayerID()).getExperience().addExperience(5,
 					((Player) player2).getPrivateChannel());
@@ -208,7 +218,7 @@ public class Fight {
 	public void player2Win(int abilityNumber) {
 		if (player2 instanceof Player) {
 			((Player) player2).getPrivateChannel().sendMessage(MessageBuilder.createWinMessage((Player) player2,
-					player1, player2.getAbilities().get(abilityNumber))).complete();
+					player1, player2.getAbilities().get(abilityNumber))).queue();
 
 			Globals.getPlayerByID(((Player) player2).getPlayerID()).getExperience().addExperience(20,
 					((Player) player2).getPrivateChannel());
@@ -216,7 +226,7 @@ public class Fight {
 
 		if (player1 instanceof Player) {
 			((Player) player1).getPrivateChannel().sendMessage(MessageBuilder.createDefeatMessage((Player) player1,
-					player2, player2.getAbilities().get(abilityNumber))).complete();
+					player2, player2.getAbilities().get(abilityNumber))).queue();
 
 			Globals.getPlayerByID(((Player) player1).getPlayerID()).getExperience().addExperience(5,
 					((Player) player1).getPrivateChannel());
@@ -235,5 +245,13 @@ public class Fight {
 
 	public boolean isTurnOfPlayer1() {
 		return turnOfPlayer1;
+	}
+
+	public boolean isNeedValidationOfPlayer2() {
+		return needValidationOfPlayer2;
+	}
+
+	public void setNeedValidationOfPlayer2(boolean needValidationOfPlayer2) {
+		this.needValidationOfPlayer2 = needValidationOfPlayer2;
 	}
 }
