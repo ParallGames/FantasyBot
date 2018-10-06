@@ -17,6 +17,10 @@ public class Fight {
 	private boolean turnOfPlayer1;
 	private boolean needValidationOfPlayer2;
 
+	public Fight(Character player1, Character player2) {
+		this.player1 = player1;
+		this.player2 = player2;
+	}
 	
 	public void fightAccepted() {
 		if (player1 instanceof Player) {
@@ -39,11 +43,6 @@ public class Fight {
 		((Player) player1).getPrivateChannel().sendMessage(MessageBuilder.createRefuseFight((Player) player2)).queue();
 		((Player) player2).getPrivateChannel().sendMessage(MessageBuilder.createConfirmationMessage((Player) player2)).queue();
 		Globals.getFightsInProgress().remove(this);
-	}
-	
-	public void constructFight(Character player1, Character player2) {
-		this.player1 = player1;
-		this.player2 = player2;
 	}
 
 	public void player1Choice() {

@@ -97,8 +97,6 @@ public class EventListener extends ListenerAdapter {
 				.sendMessage(MessageBuilder.createErrorMessage("Vous avez déjà un combats en cours !"))
 				.queue();
 			} else {
-				Fight fight = new Fight();
-
 				PlayerStats playerStats = null;
 
 				for (PlayerStats stats : Globals.getPlayers()) {
@@ -156,7 +154,7 @@ public class EventListener extends ListenerAdapter {
 				}
 
 				
-				fight.constructFight(player, ennemy);
+				Fight fight = new Fight(player, ennemy);
 
 				if(fight.getEnnemy() instanceof Player) {
 					fight.setNeedValidationOfPlayer2(true);
