@@ -1,6 +1,7 @@
 package fantasyBot.utility;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
@@ -25,44 +26,44 @@ public class MessageBuilder {
 
 		return message.build();
 	}
-	
+
 	public static MessageEmbed createQuestionValidationFights(Player player) {
 		EmbedBuilder message = new EmbedBuilder();
 		message.setTitle(player.getName() + "vous défie en duel !");
-		
+
 		message.setDescription("Acceptez-vous le duel ?");
-		
+
 		return message.build();
 	}
-	
+
 	public static MessageEmbed createWaitValidationMessage(Player ennemy) {
 		EmbedBuilder message = new EmbedBuilder();
 		message.setTitle("Attente d'acceptation du match");
-		
+
 		message.setDescription("Attente de validation du duel avec " + ennemy.getName());
-		
+
 		return message.build();
 	}
-	
+
 	public static MessageEmbed createRefuseFight(Player ennemy) {
 		EmbedBuilder message = new EmbedBuilder();
 		message.setTitle("Match refusé !");
-		
+
 		message.setDescription(ennemy.getName() + " a refusé le combat !");
-		
+
 		message.setColor(ENNEMY_COLOR);
-		
+
 		return message.build();
 	}
-	
+
 	public static MessageEmbed createConfirmationMessage(Player ennemy) {
 		EmbedBuilder message = new EmbedBuilder();
 		message.setTitle("Confirmation");
-		
+
 		message.setDescription("La proposition de duel contre " + ennemy.getName() + " a bien été décliné !");
-		
+
 		message.setColor(Color.GREEN);
-		
+
 		return message.build();
 	}
 
@@ -188,23 +189,24 @@ public class MessageBuilder {
 
 		return message.build();
 	}
-	
-	public static MessageEmbed createTop3Message(PlayerStats first, PlayerStats second, PlayerStats third) {
+
+	public static MessageEmbed createTopPlayersMessage(ArrayList<PlayerStats> bestPlayers) {
 		EmbedBuilder message = new EmbedBuilder();
-		
+
 		message.setColor(Color.YELLOW);
-		
-		message.setTitle("Les 3 meilleurs joueurs du jeu :");
-		
-		message.addField("Meilleur joueur : **" + first.getName() + "**",
-				"**" + first.getName() + "** est niveau **" + first.getExperience().getLevel() + "** avec un total de **" + first.getExperience().getTotalExpPoints() + "** points d'Exp !", false);
-		
-		message.addField("Deuxième meilleur joueur : **" + second.getName() + "**",
-				"**" + second.getName() + "** est niveau **" + second.getExperience().getLevel() + "** avec un total de **" + second.getExperience().getTotalExpPoints() + "** points d'Exp !", false);
-		
-		message.addField("Troisième meilleur joueur : **" + third.getName() + "**",
-				"**" + third.getName() + "** est niveau **" + third.getExperience().getLevel() + "** avec un total de **" + third.getExperience().getTotalExpPoints() + "** points d'Exp !", false);
-		
+
+		message.setTitle("Les " + bestPlayers.size() + " meilleurs joueurs du jeu sont :");
+
+		for (int i = 0; i < bestPlayers.size(); i++) {
+			PlayerStats player = bestPlayers.get(i);
+
+			message.addField((i + 1) + " : **" + player.getName() + "**",
+					"**" + player.getName() + "** est niveau **" + player.getExperience().getLevel()
+							+ "** avec un total de **" + player.getExperience().getTotalExpPoints()
+							+ "** points d'Exp !",
+					false);
+		}
+
 		return message.build();
 	}
 }
