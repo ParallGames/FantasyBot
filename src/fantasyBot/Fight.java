@@ -16,10 +16,12 @@ public class Fight {
 	private Character player2;
 	private boolean turnOfPlayer1;
 	private boolean needValidationOfPlayer2;
+	private boolean inventorySelection;
 
 	public Fight(Character player1, Character player2) {
 		this.player1 = player1;
 		this.player2 = player2;
+		setInventorySelection(false);
 	}
 	
 	public void fightAccepted() {
@@ -85,11 +87,17 @@ public class Fight {
 		if (player.getAbilities().size() >= 4) {
 			mess.addReaction("4⃣").queue();
 		}
+		mess.addReaction("👜").queue();
 	}
 
 	public void player1Turn(int abilityNumber) {
 		abilityNumber--;
-
+		
+		if(abilityNumber == 4) {
+			setInventorySelection(true);
+			
+		}
+		
 		if (player1 instanceof Player) {
 			if (player1.getAbilities().get(abilityNumber).getEnergyCost() > player1.getEnergy()) {
 				((Player) player1).getPrivateChannel()
@@ -252,5 +260,13 @@ public class Fight {
 
 	public void setNeedValidationOfPlayer2(boolean needValidationOfPlayer2) {
 		this.needValidationOfPlayer2 = needValidationOfPlayer2;
+	}
+
+	public boolean isInventorySelection() {
+		return inventorySelection;
+	}
+
+	public void setInventorySelection(boolean inventorySelection) {
+		this.inventorySelection = inventorySelection;
 	}
 }

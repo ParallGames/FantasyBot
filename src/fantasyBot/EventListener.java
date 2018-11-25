@@ -284,6 +284,8 @@ public class EventListener extends ListenerAdapter {
 			selection = 3;
 		} else if (emote.equals("4⃣")) {
 			selection = 4;
+		} else if (emote.equals("👜")) {
+			selection = 5;
 		} else {
 			return;
 		}

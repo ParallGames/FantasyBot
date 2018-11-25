@@ -5,12 +5,17 @@ import java.util.ArrayList;
 
 import fantasyBot.character.Character;
 import fantasyBot.character.Player;
+import fantasyBot.item.consumable.ConsumableItem;
 import fantasyBot.player.Ability;
 import fantasyBot.player.PlayerStats;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.entities.MessageEmbed.Field;
 
 public class MessageBuilder {
+	
+	private static final int MAX_ITEMS_ON_PAGE = 10;
+	
 	private static final Color BATTLE_COLOR = Color.WHITE;
 	private static final Color ENNEMY_COLOR = Color.RED;
 	private static final Color PLAYER_COLOR = Color.BLUE;
@@ -113,6 +118,40 @@ public class MessageBuilder {
 
 		return message.build();
 	}
+	
+	public static MessageEmbed createItemSelectionMessage(ArrayList<ConsumableItem> usableItem, int pageNmb) {
+		EmbedBuilder message = new EmbedBuilder();
+		
+		message.setTitle("Inventaires");
+		
+		int maxSize;
+		
+		if(usableItem.size() > MAX_ITEMS_ON_PAGE) {
+			maxSize = MAX_ITEMS_ON_PAGE;
+		}else {
+			maxSize = usableItem.size();
+		}
+		
+		int nmbMaxPage = (Integer)usableItem.size() / MAX_ITEMS_ON_PAGE;
+		
+		message.setDescription("Votre inventaires contient " + usableItem.size() + "objets différents utilisables\n"
+				+ "Affichage de la page N* " + pageNmb + " sur un total de " + nmbMaxPage);
+		
+		for(int i = 0; i < maxSize; i++) {
+			
+			int itemNumber = ((MAX_ITEMS_ON_PAGE * pageNmb) - MAX_ITEMS_ON_PAGE) + 1;
+			
+			Field itemField = new Field(itemNumber + ". " + usableItem.get(itemNumber - 1).getName(),
+							usableItem.get(itemNumber - 1).getDescription() + "\n"
+							+ "Nombres : " + usableItem.get(itemNumber - 1).getAmount() + "", true);
+			
+			message.addField(itemField);
+		}
+		
+		
+		return null;
+	}
+	
 
 	public static MessageEmbed createDamageReceivedMessage(Player player, Character ennemy, Ability attack) {
 		EmbedBuilder message = new EmbedBuilder();
